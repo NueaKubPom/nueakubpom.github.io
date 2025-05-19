@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>QR Generator Pro</title>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>🎨 สร้าง QR Code แบบมืออาชีพ</h1>
+
+    <textarea id="qrText" placeholder="ข้อความหรือลิงก์..."></textarea>
+
+    <label>ประเภทข้อมูล:</label>
+    <select id="dataType">
+      <option value="text">ข้อความทั่วไป</option>
+      <option value="url">URL</option>
+      <option value="email">อีเมล</option>
+      <option value="phone">เบอร์โทรศัพท์</option>
+      <option value="line">LINE ID</option>
+    </select>
+
+    <label>ชื่อไฟล์:</label>
+    <input type="text" id="filename" placeholder="ชื่อไฟล์ เช่น my-qr" />
+
+    <label>รูปแบบจุด:</label>
+    <select id="dotStyle">
+      <option value="square">square</option>
+      <option value="dots">dots</option>
+      <option value="rounded">rounded</option>
+      <option value="classy">classy</option>
+      <option value="classy-rounded">classy-rounded</option>
+      <option value="extra-rounded">extra-rounded</option>
+    </select>
+
+    <label>สีจุด:</label>
+    <input type="color" id="dotColor" value="#000000" />
+
+    <label>สีพื้นหลัง:</label>
+    <input type="color" id="bgColor" value="#ffffff" />
+
+    <label>โลโก้ (ไม่บังคับ):</label>
+    <input type="file" id="logoInput" accept="image/*" />
+
+    <label>ระดับการซ่อมแซม (Error Correction):</label>
+    <select id="errorCorrection">
+      <option value="L">L - ต่ำ</option>
+      <option value="M">M - ปานกลาง</option>
+      <option value="Q">Q - สูง</option>
+      <option value="H" selected>H - สูงสุด</option>
+    </select>
+
+    <label>ความละเอียด (typeNumber):</label>
+    <input type="number" id="typeNumber" min="1" max="40" value="10" />
+
+    <label>ขนาด QR (px):</label>
+    <input type="number" id="qrSize" min="100" max="1000" value="400" />
+
+    <button onclick="generateQR()">✨ สร้าง QR</button>
+
+    <div id="qr-code" class="qr-preview"></div>
+
+    <button onclick="downloadQR()">📥 ดาวน์โหลด</button>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/qr-code-styling@1.5.0/lib/qr-code-styling.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
