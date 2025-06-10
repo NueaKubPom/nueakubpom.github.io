@@ -1,12 +1,12 @@
 body {
   font-family: 'Kanit', sans-serif;
-  background: linear-gradient(to right, #ffdde1, #ee9ca7);
+  background: linear-gradient(to right, #c4f6ff, #23dfff);
   margin: 0;
   padding: 0;
   display: flex;
   justify-content: center;
-  align-items: start;
-  height: 100vh;
+  align-items: center;
+  height: 100dvh;
 }
 
 .container {
@@ -20,36 +20,16 @@ body {
   text-align: center;
 }
 
-textarea, input, select {
-  width: 100%;
-  padding: 10px;
-  margin: 8px 0 15px;
-  border-radius: 10px;
-  font-size: 14px;
-  border: 1px solid #ccc;
-  box-sizing: border-box;
-}
-
-textarea {
-  height: 80px;
-  resize: none;
-}
-
-button {
-  padding: 10px 20px;
-  margin-top: 10px;
-  border: none;
-  border-radius: 10px;
-  background-color: #ee6c4d;
-  color: white;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #d3543f;
-}
-
-.qr-preview {
-  margin: 20px 0;
+.resbae {
+    color: red;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    background: linear-gradient(to left, #c4f6ff, #23dfff);
+    border-radius: 12px;
+    &:hover {
+        border: 2px solid red;
+    }
+    &:active {
+        background: linear-gradient(to left, #5685ff, #23dfff);
+    }
 }
