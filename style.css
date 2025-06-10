@@ -18,19 +18,21 @@ body {
   width: 90%;
   max-width: 500px;
   text-align: center;
+  display: flex;
+  flex-direction: column;
 }
 
 .resbae {
-    margin: 1rem 0;
-    color: red;
-    text-decoration: none;
-    padding: 0.5rem 1rem;
-    background: linear-gradient(to left, #c4f6ff, #23dfff);
-    border-radius: 12px;
-    &:hover {
-        border: 2px solid red;
-    }
-    &:active {
-        background: linear-gradient(to left, #5685ff, #23dfff);
-    }
+  margin: 0.5rem 0;
+  color: red;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  background: linear-gradient(to left, #c4f6ff, #23dfff);
+  border-radius: 12px;
+  &:hover {
+      border: 2px solid red;
+  }
+  &:active {
+      background: linear-gradient(to left, #5685ff, #23dfff);
+  }
 }
