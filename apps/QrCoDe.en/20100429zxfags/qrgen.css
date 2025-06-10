@@ -5,8 +5,8 @@ body {
   padding: 0;
   display: flex;
   justify-content: center;
-  align-items: center;
-  height: 100dvh;
+  align-items: start;
+  height: 110vh;
 }
 
 .container {
