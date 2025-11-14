@@ -1,8 +1,9 @@
-/* ธีม: แดง-ดำ (Red & Black) "กระจกขน"
-   สำหรับหน้า Index (พอร์ทัล)
-*/
+/*
+ * ธีม: แดง-ดำ "กระจกขน" (Red-Black Glassmorphism)
+ * สำหรับหน้า Index (พอร์ทัล)
+ */
 
-body {
+ body {
   font-family: 'Kanit', sans-serif;
   background: linear-gradient(135deg, #330000, #000000);
   margin: 0;
@@ -36,9 +37,13 @@ h1 {
   color: #ff8a8a; /* สีแดงอ่อนให้เด่นขึ้น */
 }
 
-/* สไตล์ปุ่มลิงก์ */
+/* (อัปเดต!) สไตล์ปุ่มลิงก์ */
 .button-link {
-  display: block;
+  /* (ใหม่!) ใช้ Flexbox เพื่อจัดเรียงไอคอน */
+  display: flex; 
+  align-items: center;
+  justify-content: center; /* (ใหม่!) ให้ไอคอน+ข้อความ อยู่กลางปุ่ม */
+  
   margin: 0.5rem 0;
   color: white;
   text-decoration: none;
@@ -49,6 +54,14 @@ h1 {
   font-weight: bold;
   font-size: 1.1rem;
   transition: all 0.3s ease;
+}
+
+/* (ใหม่!) จัดสไตล์ไอคอน */
+.button-link i {
+  margin-right: 12px; /* เว้นช่องว่างระหว่างไอคอนกับข้อความ */
+  font-size: 1.2em; /* ทำให้ไอคอนใหญ่กว่าข้อความเล็กน้อย */
+  width: 25px; /* กำหนดพื้นที่ไอคอนให้เท่ากัน */
+  text-align: center; /* จัดไอคอนให้อยู่กลางพื้นที่ */
 }
 
 .button-link:hover {
