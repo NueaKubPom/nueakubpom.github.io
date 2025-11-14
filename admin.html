@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>จัดการลิงก์ (Admin)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* (CSS เดิม) */
+    input[type="text"], input[type="url"], input[type="number"], select {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0 10px;
+      border-radius: 10px;
+      border: 1px solid #555;
+      background: rgba(0,0,0,0.2);
+      color: white;
+      box-sizing: border-box;
+      font-family: 'Kanit', sans-serif; /* (เพิ่ม) ให้ฟอนต์เหมือนกัน */
+      font-size: 14px; /* (เพิ่ม) */
+    }
+    .link-item {
+      background: rgba(0,0,0,0.2);
+      padding: 10px 15px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    textarea {
+      width: 100%;
+      height: 200px;
+      background: #000;
+      color: #0f0;
+      border: 1px solid #555;
+      margin-top: 15px;
+    }
+    #save-area {
+      display: none;
+    }
+    
+    /* (ใหม่!) 1. สไตล์สำหรับตัวคลิก "แก้ไข" */
+    .edit-trigger {
+      flex-grow: 1; /* ให้พื้นที่ข้อความเต็ม */
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .edit-trigger:hover {
+      color: #ff8a8a; /* สีแดงอ่อนตอนชี้ */
+    }
+    .delete-btn {
+      background: #e74c3c;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-left: 10px; /* เว้นระยะจากข้อความ */
+    }
+
+    /* (ใหม่!) 2. สไตล์สำหรับ Modal (Pop-up) */
+    .modal-overlay {
+      display: none; /* ซ่อนไว้ก่อน */
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-content {
+      /* (ใช้สไตล์ Glassmorphism "กระจกขน" เดียวกับ .container) */
+      background: rgba(255, 0, 0, 0.1);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 0 40px rgba(255, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      
+      margin: auto;
+      padding: 30px;
+      border-radius: 15px;
+      width: 90%;
+      max-width: 500px;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="index.html">กลับหน้าหลัก</a>
+    <h1>👩‍💼 จัดการลิงก์</h1>
+    
+    <h2>ลิงก์ปัจจุบัน (คลิกเพื่อแก้ไข):</h2>
+    <div id="links-list">
+      </div>
+
+    <hr>
+    
+    <h2>➕ เพิ่มลิงก์ใหม่</h2>
+    <form id="add-form">
+      <label>Emoji:</label>
+      <input type="text" id="link-emoji" required />
+      <label>ข้อความ:</label>
+      <input type="text" id="link-text" required />
+      <label>URL (ลิงก์):</label>
+      <input type="url" id="link-url" placeholder="https://..." required />
+      <label>การแสดงผล (Target):</label>
+      <select id="link-target">
+        <option value="_self">เปิดในแท็บเดิม (_self)</option>
+        <option value="_blank">เปิดในแท็บใหม่ (_blank)</option>
+      </select>
+      <button type="submit" class="button-link">➕ เพิ่มลิงก์</button>
+    </form>
+
+    <hr>
+    
+    <button id="generate-button" class="button-link" style="background: linear-gradient(to right, #27ae60, #2ecc71);">💾 สร้างโค้ด JSON</button>
+
+    <div id="save-area">
+      <h3>โค้ดใหม่ของคุณ:</h3>
+      <p>คัดลอกข้อความทั้งหมดนี้ ไปวางทับไฟล์ `links.json`</p>
+      <textarea id="json-output" readonly></textarea>
+    </div>
+  </div>
+
+  <div id="edit-modal" class="modal-overlay">
+    <div class="modal-content">
+      <h2>✏️ แก้ไขลิงก์</h2>
+      <form id="edit-form">
+        <input type="hidden" id="edit-index" />
+        
+        <label>Emoji:</label>
+        <input type="text" id="edit-emoji" required />
+        <label>ข้อความ:</label>
+        <input type="text" id="edit-text" required />
+        <label>URL (ลิงก์):</label>
+        <input type="url" id="edit-url" placeholder="https://..." required />
+        <label>การแสดงผล (Target):</label>
+        <select id="edit-target">
+          <option value="_self">เปิดในแท็บเดิม (_self)</option>
+          <option value="_blank">เปิดในแท็บใหม่ (_blank)</option>
+        </select>
+        
+        <button type="submit" class="button-link">💾 บันทึกการแก้ไข</button>
+        <button type="button" id="cancel-edit" class="button-link" style="background: #7f8c8d;">ยกเลิก</button>
+      </form>
+    </div>
+  </div>
+  
+  <script src="admin.js"></script>
+</body>
+</html>
