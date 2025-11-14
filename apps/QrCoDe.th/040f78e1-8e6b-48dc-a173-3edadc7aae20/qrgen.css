@@ -1,0 +1,115 @@
+/* ธีม: แดง-ดำ (Red & Black)
+  สไตล์: "กระจกขน" (Furry Glassmorphism)
+*/
+
+body {
+    font-family: 'Kanit', sans-serif;
+    /* 1. เปลี่ยนพื้นหลังเป็น แดง-ดำ */
+    background: linear-gradient(135deg, #330000, #000000);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: start; /* ใช้ 'start' ตามโค้ดใหม่ของคุณ */
+    height: 100vh;
+    /* 2. ทำให้ตัวอักษรพื้นฐานเป็นสีอ่อน */
+    color: #f0f0f0; 
+  }
+  
+  .container {
+    /* --- 3. เอฟเฟกต์ "กระจก" (Glass) --- */
+    background: rgba(255, 0, 0, 0.1); /* พื้นหลังโปร่งแสง (โทนแดง) */
+    backdrop-filter: blur(12px); /* เอฟเฟกต์กระจกฝ้า */
+    -webkit-backdrop-filter: blur(12px); /* สำหรับ Safari */
+    
+    /* --- 4. เอฟเฟกต์ "ขน" (Furry Glow) --- */
+    box-shadow: 0 0 40px rgba(255, 0, 0, 0.4); /* เงาสีแดงฟุ้งๆ */
+    
+    /* ขอบกระจก */
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    
+    /* --- คุณสมบัติเดิม --- */
+    margin-top: 30px;
+    padding: 30px;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 500px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* --- 5. จัดสไตล์ช่องกรอกข้อมูลให้เข้าธีม --- */
+  textarea,
+  input,
+  select {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0 15px;
+    border-radius: 10px;
+    font-size: 14px;
+    box-sizing: border-box;
+    
+    /* สไตล์ใหม่ (Dark/Glass) */
+    font-family: 'Kanit', sans-serif; /* ทำให้ฟอนต์เหมือนกัน */
+    background: rgba(0, 0, 0, 0.3); /* พื้นหลังโปร่งแสงสีเข้ม */
+    color: white; /* สีตัวอักษรที่พิมพ์ */
+    border: 1px solid rgba(255, 255, 255, 0.3); /* ขอบสีอ่อน */
+  }
+  
+  /* ทำให้ placeholder อ่านง่ายขึ้น */
+  ::placeholder {
+    color: #ccc;
+    opacity: 1;
+  }
+  
+  textarea {
+    height: 80px;
+    resize: none;
+  }
+  
+  /* --- 6. จัดสไตล์ปุ่มให้เป็นธีมสีแดง --- */
+  button {
+    padding: 10px 20px;
+    margin-top: 10px;
+    border-radius: 10px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    
+    /* สไตล์ใหม่ (Red Gradient) */
+    font-family: 'Kanit', sans-serif; /* ทำให้ฟอนต์เหมือนกัน */
+    background: linear-gradient(to right, #e74c3c, #c0392b);
+    border: 2px solid transparent;
+    font-weight: bold;
+    transition: all 0.3s ease;
+  }
+  
+  button:hover {
+    /* สว่างขึ้น และมีเงา */
+    background: linear-gradient(to right, #ff5e4d, #d64535);
+    border: 2px solid #ff8a8a;
+    box-shadow: 0 0 15px rgba(255, 100, 100, 0.5);
+    transform: translateY(-2px);
+  }
+  
+  /* (เพิ่ม) เอฟเฟกต์ตอนกดปุ่ม */
+  button:active {
+    background: linear-gradient(to left, #c0392b, #a93226);
+    transform: translateY(1px);
+    box-shadow: none;
+  }
+  
+  .qr-preview {
+    margin: 20px 0;
+  }
+  
+  /* (เพิ่ม) ทำให้รูป QR Code (ถ้ามี)
+     ดูเด่นขึ้นบนพื้นหลังกระจก */
+  .qr-preview img {
+    background: white;
+    padding: 10px;
+    border-radius: 10px;
+    max-width: 60%; /* ไม่ให้ใหญ่เกินไป */
+    height: auto;
+  }

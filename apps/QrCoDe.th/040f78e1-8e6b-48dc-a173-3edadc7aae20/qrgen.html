@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>QR Generator Pro</title>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="qrgen.css" />
+</head>
+<body>
+  <div class="container">
+    <a style="color: white;" href="/index.html">กลับหน้าหลัก</a>
+
+    <h1>🎨 สร้าง QR Code แบบมืออาชีพ</h1>
+
+    <div id="text-input-area">
+      <textarea id="qrText" placeholder="ข้อความหรือลิงก์..."></textarea>
+    </div>
+    <div id="wifi-input-area" style="display: none;">
+      <label>ชื่อเครือข่าย (SSID):</label>
+      <input type="text" id="wifiSSID" placeholder="ชื่อ WiFi ของคุณ" />
+      <label>รหัสผ่าน:</label>
+      <input type="text" id="wifiPass" placeholder="รหัสผ่าน WiFi" />
+      <label>ประเภทการเข้ารหัส:</label>
+      <select id="wifiEnc">
+        <option value="WPA" selected>WPA/WPA2</option>
+        <option value="WEP">WEP</option>
+        <option value="nopass">ไม่มีรหัสผ่าน (เปิด)</option>
+      </select>
+    </div>
+    
+    <label>ประเภทข้อมูล:</label>
+    <select id="dataType">
+      <option value="text">ข้อความทั่วไป</option>
+      <option value="url">URL</option>
+      <option value="email">อีเมล</option>
+      <option value="phone">เบอร์โทรศัพท์</option>
+      <option value="line">LINE ID</option>
+      <option value="wifi">WiFi</option>
+    </select>
+
+    <label>ชื่อไฟล์:</label>
+    <input type="text" id="filename" placeholder="ชื่อไฟล์ เช่น my-qr" />
+
+    <label>รูปแบบจุด:</label>
+    <select id="dotStyle">
+      <option value="square">square</option>
+      <option value="dots">dots</option>
+      <option value="rounded">rounded</option>
+      <option value="classy">classy</option>
+      <option value="classy-rounded">classy-rounded</option>
+      <option value="extra-rounded">extra-rounded</option>
+    </select>
+
+    <label>รูปแบบกรอบ (ตา):</label>
+    <select id="cornerSquareStyle">
+      <option value="square" selected>Square</option>
+      <option value="extra-rounded">Extra Rounded</option>
+      <option value="dot">Dot</option>
+    </select>
+    
+    <label>รูปแบบจุด (ในตา):</label>
+    <select id="cornerDotStyle">
+      <option value="square" selected>Square</option>
+      <option value="dot">Dot</option>
+    </select>
+
+    <label>ประเภทสีจุด (และสีตา):</label>
+    <select id="dotColorType">
+      <option value="solid" selected>สีทึบ</option>
+      <option value="gradient">ไล่สี (Gradient)</option>
+    </select>
+    
+    <label>สีจุด 1:</label>
+    <input type="color" id="dotColor1" value="#000000" />
+
+    <div id="dotGradientOptions" style="display:none;">
+      <label>สีจุด 2:</label>
+      <input type="color" id="dotColor2" value="#ff0000" />
+      <label>ประเภทการไล่สี (จุด):</label>
+      <select id="dotGradientType">
+        <option value="linear">เส้นตรง (Linear)</option>
+        <option value="radial">วงกลม (Radial)</option>
+      </select>
+      <label>องศาการหมุน (จุด):</label>
+      <input type="number" id="dotGradientRotation" value="0" min="0" max="360" />
+    </div>
+
+    <label>ประเภทพื้นหลัง:</label>
+    <select id="bgType">
+      <option value="solid" selected>สีทึบ</option>
+      <option value="gradient">ไล่สี (Gradient)</option>
+      <option value="transparent">โปร่งใส (Transparent)</option>
+    </select>
+    
+    <div id="bgColorOptions">
+      <label>สีพื้นหลัง 1:</label>
+      <input type="color" id="bgColor1" value="#ffffff" />
+    </div>
+
+    <div id="bgGradientOptions" style="display:none;">
+      <label>สีพื้นหลัง 2:</label>
+      <input type="color" id="bgColor2" value="#eeeeff" />
+      <label>ประเภทการไล่สี (พื้นหลัง):</label>
+      <select id="bgGradientType">
+        <option value="linear">เส้นตรง (Linear)</option>
+        <option value="radial">วงกลม (Radial)</option>
+      </select>
+      <label>องศาการหมุน (พื้นหลัง):</label>
+      <input type="number" id="bgGradientRotation" value="0" min="0" max="360" />
+    </div>
+
+
+    <label>โลโก้ (ไม่บังคับ):</label>
+    <input type="file" id="logoInput" accept="image/*" />
+
+    <label>ระดับการซ่อมแซม (Error Correction):</label>
+    <select id="errorCorrection">
+      <option value="L">L - ต่ำ</option>
+      <option value="M">M - ปานกลาง</option>
+      <option value="Q">Q - สูง</option>
+      <option value="H" selected>H - สูงสุด</option>
+    </select>
+
+    <label>ความละเอียด (typeNumber):</label>
+    <input type="number" id="typeNumber" min="1" max="40" value="10" />
+
+    <label>ขนาด QR (px):</label>
+    <input type="number" id="qrSize" min="100" max="1000" value="400" />
+
+    <button onclick="generateQR()">✨ สร้าง QR</button>
+
+    <div id="qr-code" class="qr-preview"></div>
+
+    <button onclick="downloadQR()">📥 ดาวน์โหลด</button>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/qr-code-styling@1.5.0/lib/qr-code-styling.js"></script>
+  <script src="qrgen.js"></script>
+</body>
+</html>
