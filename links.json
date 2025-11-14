@@ -17,42 +17,49 @@
     "id": "discord",
     "icon": "fa-brands fa-discord",
     "text": "Discord",
-    "url": "YOUR_DISCORD_LINK_HERE",
+    "url": "https://discord.gg/7TFzeRfVz8",
     "target": "_blank"
   },
   {
     "id": "facebook",
     "icon": "fa-brands fa-facebook",
     "text": "Facebook",
-    "url": "YOUR_FACEBOOK_LINK_HERE",
+    "url": "https://www.facebook.com/nueakubpomNKPNTSTO",
     "target": "_blank"
   },
   {
     "id": "instagram",
     "icon": "fa-brands fa-instagram",
     "text": "Instagram",
-    "url": "YOUR_INSTAGRAM_LINK_HERE",
+    "url": "https://instagram.com/nueakubpomNKPNTSTO",
     "target": "_blank"
   },
   {
     "id": "line",
     "icon": "fa-brands fa-line",
     "text": "LINE",
-    "url": "YOUR_LINE_LINK_HERE",
+    "url": "https://line.me/ti/p/q6ZhSlOHdT",
     "target": "_blank"
   },
   {
     "id": "tiktok",
     "icon": "fa-brands fa-tiktok",
     "text": "TikTok",
-    "url": "YOUR_TIKTOK_LINK_HERE",
+    "url": "https://www.tiktok.com/@nt_studio_nueakubpom",
     "target": "_blank"
   },
   {
     "id": "youtube",
     "icon": "fa-brands fa-youtube",
     "text": "YouTube",
-    "url": "YOUR_YOUTUBE_LINK_HERE",
+    "url": "https://youtube.com/@nkpnt_studio",
     "target": "_blank"
+  },
+  {
+    "id": "bot",
+    "icon": "fa-solid fa-robot",
+    "text": "บอท ดิสคอร์ด (NKPNTSTO-Bot)",
+    "url": "/NKPNTSTO-Bot",
+    "target": "_self"
   }
 ]
