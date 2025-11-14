@@ -1,0 +1,16 @@
+[
+    {
+      "id": "qr",
+      "emoji": "🎨",
+      "text": "สร้าง QR Code",
+      "url": "./apps/QrCoDe.th/040f78e1-8e6b-48dc-a173-3edadc7aae20/qrgen.html",
+      "target": "_self"
+    },
+    {
+      "id": "shop",
+      "emoji": "🛍️",
+      "text": "NKPNTSTO SHOP",
+      "url": "YOUR_SHOP_LINK_HERE",
+      "target": "_blank"
+    }
+  ]
