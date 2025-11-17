@@ -21,6 +21,13 @@
     "target": "_blank"
   },
   {
+    "id": "portfolio",
+    "icon": "fa-solid fa-eye",
+    "text": "Portfolio",
+    "url": "https://portfolionueakubpom.onrender.com",
+    "target": "_blank"
+  },
+  {
     "id": "facebook",
     "icon": "fa-brands fa-facebook",
     "text": "Facebook",
