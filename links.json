@@ -61,12 +61,5 @@
     "text": "YouTube",
     "url": "https://youtube.com/@nkpnt_studio",
     "target": "_blank"
-  },
-  {
-    "id": "bot",
-    "icon": "fa-solid fa-robot",
-    "text": "บอท ดิสคอร์ด (NKPNTSTO-Bot)",
-    "url": "/NKPNTSTO-Bot",
-    "target": "_self"
   }
 ]
