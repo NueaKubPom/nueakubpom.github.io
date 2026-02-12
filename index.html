@@ -1,19 +1,31 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>NueaKubPom - หน้าหลัก</title>
+  <title>NueaKubPom</title>
   <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet" />
-  
+
   <!-- (ใหม่!) เพิ่ม Font Awesome 6 CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
 
-  <link rel="stylesheet" href="style.css" /> 
+  <link rel="icon" href="NKP-NT Studio Logo.png" type="image/png">
+
+  <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
   <div class="container">
-    <h1>NueaKubPom</h1>
+    <!-- Logo Icon -->
+    <!-- Logo Icon -->
+    <img src="NKP-NT Studio Logo.png" alt="NKP-NT Studio Logo" class="site-logo-img">
+
+    <!-- Animated Title -->
+    <h1 class="brand-title">
+      <span class="main-brand">NueaKubPom</span>
+      <span class="typing-container" id="typing-text"></span>
+    </h1>
     <p>เลือกบริการที่คุณต้องการ:</p>
 
     <!-- (เหมือนเดิม) "container" รอรับลิงก์ -->
@@ -22,8 +34,13 @@
     </div>
 
   </div>
-  
+
+  <div class="footer">
+    <p>&copy; 2024-<span id="current-year"></span> NueaKubPom. All Rights Reserved. <br> Designed for Excellence.</p>
+  </div>
+
   <!-- (เหมือนเดิม) เรียกใช้ JavaScript -->
   <script src="app.js"></script>
 </body>
+
 </html>

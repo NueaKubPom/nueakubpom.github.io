@@ -2,14 +2,41 @@ let qrCode; // สำหรับ QR Code จริง (ที่ดาวน์
 let previewQrCode; // สำหรับ "test" ที่แสดงผลสด
 
 // (A) ส่วนจัดการ UI และ Live Preview
-document.addEventListener("DOMContentLoaded", function() {
-  
+document.addEventListener("DOMContentLoaded", function () {
+
+  // --- 0. Branding: Dynamic Year ---
+  const yearSpan = document.getElementById("current-year");
+  if (yearSpan) yearSpan.textContent = new Date().getFullYear();
+
+  // --- 0.1 Branding: Typewriter Effect ---
+  const typingElement = document.getElementById("typing-text");
+  const textToType = " X NKPNT STUDIO";
+  let charIndex = 0;
+  let isDeleting = false;
+
+  function typeEffect() {
+    const currentText = isDeleting
+      ? textToType.substring(0, charIndex--)
+      : textToType.substring(0, charIndex++);
+    if (typingElement) typingElement.textContent = currentText;
+    let typeSpeed = isDeleting ? 50 : 150;
+    if (!isDeleting && charIndex === textToType.length + 1) {
+      isDeleting = true;
+      typeSpeed = 2000;
+    } else if (isDeleting && charIndex === 0) {
+      isDeleting = false;
+      typeSpeed = 500;
+    }
+    setTimeout(typeEffect, typeSpeed);
+  }
+  if (typingElement) setTimeout(typeEffect, 1000);
+
   // --- 1. โค้ดสลับช่องกรอก (WiFi/Text) ---
   const dataTypeSelect = document.getElementById("dataType");
   const textInputArea = document.getElementById("text-input-area");
   const wifiInputArea = document.getElementById("wifi-input-area");
 
-  dataTypeSelect.addEventListener("change", function() {
+  dataTypeSelect.addEventListener("change", function () {
     if (this.value === "wifi") {
       textInputArea.style.display = "none";
       wifiInputArea.style.display = "block";
@@ -22,8 +49,8 @@ document.addEventListener("DOMContentLoaded", function() {
   // --- 2. (ใหม่!) โค้ดสลับช่องกรอก Gradient/Solid ---
   const dotColorType = document.getElementById("dotColorType");
   const dotGradientOptions = document.getElementById("dotGradientOptions");
-  
-  dotColorType.addEventListener("change", function() {
+
+  dotColorType.addEventListener("change", function () {
     dotGradientOptions.style.display = (this.value === "gradient") ? "block" : "none";
   });
 
@@ -31,7 +58,7 @@ document.addEventListener("DOMContentLoaded", function() {
   const bgColorOptions = document.getElementById("bgColorOptions");
   const bgGradientOptions = document.getElementById("bgGradientOptions");
 
-  bgType.addEventListener("change", function() {
+  bgType.addEventListener("change", function () {
     if (this.value === "gradient") {
       bgColorOptions.style.display = "block";
       bgGradientOptions.style.display = "block";
@@ -48,7 +75,7 @@ document.addEventListener("DOMContentLoaded", function() {
   let initialOptions = buildStylingOptions();
   initialOptions.data = "test"; // บังคับข้อมูลเป็น "test"
   initialOptions.image = ""; // ไม่มีโลโก้ในพรีวิว
-  
+
   previewQrCode = new QRCodeStyling(initialOptions);
   previewQrCode.append(document.getElementById("qr-code"));
 
@@ -61,13 +88,13 @@ document.addEventListener("DOMContentLoaded", function() {
     // สีพื้นหลัง
     "bgType", "bgColor1", "bgColor2", "bgGradientType", "bgGradientRotation",
     // ตั้งค่า
-    "errorCorrection", "typeNumber", "qrSize"
+    "errorCorrection", "typeNumber", "qrSize", "qrMargin"
   ];
 
   styleInputs.forEach(id => {
     const el = document.getElementById(id);
     if (!el) return; // ถ้าหาไม่เจอก็ข้ามไป
-    
+
     // 'input' ใช้สำหรับ color/number (เปลี่ยนทันทีที่ลาก)
     // 'change' ใช้สำหรับ select (เปลี่ยนหลังเลือก)
     const eventType = (el.tagName === 'INPUT' && (el.type === 'color' || el.type === 'number')) ? 'input' : 'change';
@@ -80,7 +107,7 @@ document.addEventListener("DOMContentLoaded", function() {
  * นี่คือหัวใจหลักที่ทำให้ "สิ่งที่เห็น" (Preview) = "สิ่งที่ได้" (Generate)
  */
 function buildStylingOptions() {
-  
+
   // 1. สร้าง dotsOptions (สีจุด / ไล่สีจุด)
   const dotColorType = document.getElementById("dotColorType").value;
   const dotColor1 = document.getElementById("dotColor1").value;
@@ -100,7 +127,7 @@ function buildStylingOptions() {
   } else {
     dotsOptions.color = dotColor1;
   }
-  
+
   // 2. สร้าง backgroundOptions (สีพื้นหลัง / ไล่สี / โปร่งใส)
   const bgType = document.getElementById("bgType").value;
   let backgroundOptions = {};
@@ -119,7 +146,7 @@ function buildStylingOptions() {
   } else {
     backgroundOptions.color = document.getElementById("bgColor1").value;
   }
-  
+
   // 3. สร้าง cornersOptions (ให้ใช้สี/gradient เดียวกับ dots)
   let cornersSquareOptions = {
     type: document.getElementById("cornerSquareStyle").value,
@@ -127,7 +154,7 @@ function buildStylingOptions() {
   let cornersDotOptions = {
     type: document.getElementById("cornerDotStyle").value,
   };
-  
+
   if (dotColorType === "gradient") {
     cornersSquareOptions.gradient = dotsOptions.gradient;
     cornersDotOptions.gradient = dotsOptions.gradient;
@@ -140,7 +167,7 @@ function buildStylingOptions() {
   return {
     width: parseInt(document.getElementById("qrSize").value),
     height: parseInt(document.getElementById("qrSize").value),
-    margin: 15, // (Padding ที่คุณขอไว้)
+    margin: parseInt(document.getElementById("qrMargin").value), // (Padding ที่ปรับได้)
     qrOptions: {
       errorCorrectionLevel: document.getElementById("errorCorrection").value,
       typeNumber: parseInt(document.getElementById("typeNumber").value),
@@ -161,8 +188,8 @@ function buildStylingOptions() {
  * (C) ฟังก์ชันอัปเดต "test" QR Code (Live Preview)
  */
 function updatePreview() {
-  if (!previewQrCode) return; 
-  
+  if (!previewQrCode) return;
+
   let updatedOptions = buildStylingOptions();
   // (พรีวิวจะไม่มี data และ image เพราะใช้ของเดิม)
   previewQrCode.update(updatedOptions);
@@ -228,11 +255,11 @@ function generateQR() {
     const logoData = logoFile ? reader.result : null;
 
     // (สำคัญ) ลบ "test" QR Code (preview) ออกก่อน
-    document.getElementById("qr-code").innerHTML = ""; 
+    document.getElementById("qr-code").innerHTML = "";
 
     // 1. ดึงสไตล์ทั้งหมดที่ผู้ใช้ตั้งค่าไว้
     let finalOptions = buildStylingOptions();
-    
+
     // 2. เพิ่มข้อมูลจริง (data) และโลโก้ (image) เข้าไป
     finalOptions.data = unescape(encodeURIComponent(text));
     finalOptions.image = logoData;
