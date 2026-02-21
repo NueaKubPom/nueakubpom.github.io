@@ -30,12 +30,40 @@
       <span class="typing-container" id="typing-text"></span>
     </h1>
 
-    <!-- ===== ส่วนกรอกข้อมูล ===== -->
+    <!-- ===== ประเภทข้อมูล ===== -->
+    <label>ประเภทข้อมูล:</label>
+    <select id="dataType">
+      <optgroup label="📝 ข้อความ & ลิงก์">
+        <option value="text">📝 ข้อความทั่วไป</option>
+        <option value="url">🔗 URL / ลิงก์เว็บ</option>
+      </optgroup>
+      <optgroup label="📱 การสื่อสาร">
+        <option value="email">📧 อีเมล</option>
+        <option value="phone">📞 เบอร์โทรศัพท์</option>
+        <option value="sms">💬 SMS</option>
+        <option value="line">💚 LINE ID</option>
+      </optgroup>
+      <optgroup label="🌐 โซเชียล">
+        <option value="facebook">📘 Facebook</option>
+        <option value="instagram">📸 Instagram</option>
+        <option value="youtube">🎬 YouTube</option>
+        <option value="tiktok">🎵 TikTok</option>
+      </optgroup>
+      <optgroup label="📋 ข้อมูลขั้นสูง">
+        <option value="wifi">📶 WiFi</option>
+        <option value="vcard">📇 นามบัตร vCard</option>
+        <option value="geo">📍 พิกัด GPS / แผนที่</option>
+        <option value="event">📅 กิจกรรม / Calendar</option>
+      </optgroup>
+    </select>
+
+    <!-- ===== ส่วนกรอกข้อมูล: ข้อความทั่วไป ===== -->
     <div id="text-input-area">
       <textarea id="qrText" placeholder="ข้อความหรือลิงก์..."></textarea>
     </div>
 
-    <div id="wifi-input-area" style="display: none;">
+    <!-- ===== ส่วนกรอกข้อมูล: WiFi ===== -->
+    <div id="wifi-input-area" class="special-input-area" style="display: none;">
       <label>ชื่อเครือข่าย (SSID):</label>
       <input type="text" id="wifiSSID" placeholder="ชื่อ WiFi ของคุณ" />
       <label>รหัสผ่าน:</label>
@@ -48,44 +76,126 @@
       </select>
     </div>
 
-    <label>ประเภทข้อมูล:</label>
-    <select id="dataType">
-      <option value="text">ข้อความทั่วไป</option>
-      <option value="url">URL</option>
-      <option value="email">อีเมล</option>
-      <option value="phone">เบอร์โทรศัพท์</option>
-      <option value="line">LINE ID</option>
-      <option value="wifi">WiFi</option>
-    </select>
+    <!-- ===== ส่วนกรอกข้อมูล: SMS ===== -->
+    <div id="sms-input-area" class="special-input-area" style="display: none;">
+      <label>เบอร์โทรผู้รับ:</label>
+      <input type="text" id="smsNumber" placeholder="เช่น 0812345678" />
+      <label>ข้อความ (ไม่บังคับ):</label>
+      <textarea id="smsBody" placeholder="ข้อความ SMS..."></textarea>
+    </div>
+
+    <!-- ===== ส่วนกรอกข้อมูล: vCard ===== -->
+    <div id="vcard-input-area" class="special-input-area" style="display: none;">
+      <label>ชื่อ - นามสกุล:</label>
+      <input type="text" id="vcardName" placeholder="เช่น สมชาย ใจดี" />
+      <label>เบอร์โทร:</label>
+      <input type="text" id="vcardPhone" placeholder="เช่น 0812345678" />
+      <label>อีเมล:</label>
+      <input type="text" id="vcardEmail" placeholder="เช่น example@mail.com" />
+      <label>บริษัท / องค์กร:</label>
+      <input type="text" id="vcardOrg" placeholder="ชื่อบริษัท (ไม่บังคับ)" />
+      <label>ตำแหน่ง:</label>
+      <input type="text" id="vcardTitle" placeholder="ตำแหน่งงาน (ไม่บังคับ)" />
+      <label>เว็บไซต์:</label>
+      <input type="text" id="vcardUrl" placeholder="https://... (ไม่บังคับ)" />
+      <label>ที่อยู่:</label>
+      <textarea id="vcardAddress" placeholder="ที่อยู่ (ไม่บังคับ)"></textarea>
+    </div>
+
+    <!-- ===== ส่วนกรอกข้อมูล: Geo ===== -->
+    <div id="geo-input-area" class="special-input-area" style="display: none;">
+      <label>ละติจูด (Latitude):</label>
+      <input type="number" id="geoLat" step="any" placeholder="เช่น 13.7563" />
+      <label>ลองจิจูด (Longitude):</label>
+      <input type="number" id="geoLng" step="any" placeholder="เช่น 100.5018" />
+      <label>ชื่อสถานที่ (ไม่บังคับ):</label>
+      <input type="text" id="geoLabel" placeholder="เช่น กรุงเทพฯ" />
+    </div>
+
+    <!-- ===== ส่วนกรอกข้อมูล: Event ===== -->
+    <div id="event-input-area" class="special-input-area" style="display: none;">
+      <label>ชื่อกิจกรรม:</label>
+      <input type="text" id="eventTitle" placeholder="เช่น ประชุมทีม" />
+      <label>วันเวลาเริ่ม:</label>
+      <input type="datetime-local" id="eventStart" />
+      <label>วันเวลาจบ:</label>
+      <input type="datetime-local" id="eventEnd" />
+      <label>สถานที่:</label>
+      <input type="text" id="eventLocation" placeholder="สถานที่จัดงาน (ไม่บังคับ)" />
+      <label>รายละเอียด:</label>
+      <textarea id="eventDescription" placeholder="รายละเอียดเพิ่มเติม (ไม่บังคับ)"></textarea>
+    </div>
 
     <label>ชื่อไฟล์:</label>
     <input type="text" id="filename" placeholder="ชื่อไฟล์ เช่น my-qr" />
 
+    <!-- ===== Preset Themes ===== -->
+    <details>
+      <summary>🎨 ธีมสำเร็จรูป & สุ่มสไตล์</summary>
+      <div class="option-group">
+        <div class="preset-grid">
+          <button class="preset-btn" onclick="applyPreset('classic')" title="Classic">
+            <span class="preset-preview" style="background: linear-gradient(135deg, #000 50%, #fff 50%);"></span>
+            <span>🖤 Classic</span>
+          </button>
+          <button class="preset-btn" onclick="applyPreset('ocean')" title="Ocean Blue">
+            <span class="preset-preview" style="background: linear-gradient(135deg, #0077b6, #00b4d8);"></span>
+            <span>🔵 Ocean</span>
+          </button>
+          <button class="preset-btn" onclick="applyPreset('galaxy')" title="Purple Galaxy">
+            <span class="preset-preview" style="background: linear-gradient(135deg, #7b2ff7, #c471ed);"></span>
+            <span>🟣 Galaxy</span>
+          </button>
+          <button class="preset-btn" onclick="applyPreset('sunset')" title="Sunset">
+            <span class="preset-preview" style="background: linear-gradient(135deg, #f7971e, #ff6b6b);"></span>
+            <span>🔴 Sunset</span>
+          </button>
+          <button class="preset-btn" onclick="applyPreset('nature')" title="Nature">
+            <span class="preset-preview" style="background: linear-gradient(135deg, #11998e, #38ef7d);"></span>
+            <span>🟢 Nature</span>
+          </button>
+          <button class="preset-btn" onclick="applyPreset('neon')" title="Neon">
+            <span class="preset-preview" style="background: linear-gradient(135deg, #00ff87, #60efff);"></span>
+            <span>⚡ Neon</span>
+          </button>
+          <button class="preset-btn" onclick="applyPreset('cherry')" title="Cherry Blossom">
+            <span class="preset-preview" style="background: linear-gradient(135deg, #ff6b9d, #ffa8cc);"></span>
+            <span>🌸 Cherry</span>
+          </button>
+          <button class="preset-btn" onclick="applyPreset('gold')" title="Gold Luxury">
+            <span class="preset-preview" style="background: linear-gradient(135deg, #d4af37, #f5d061);"></span>
+            <span>✨ Gold</span>
+          </button>
+        </div>
+        <button class="btn-randomize" onclick="randomizeStyle()">🎲 สุ่มสไตล์ทั้งหมด!</button>
+      </div>
+    </details>
+
     <!-- ===== รูปแบบจุด ===== -->
     <details>
-      <summary>🎨 รูปแบบจุด & กรอบ</summary>
+      <summary>🧩 รูปแบบจุด & กรอบ</summary>
       <div class="option-group">
         <label>รูปแบบจุด:</label>
         <select id="dotStyle">
-          <option value="square">square</option>
-          <option value="dots">dots</option>
-          <option value="rounded">rounded</option>
-          <option value="classy">classy</option>
-          <option value="classy-rounded">classy-rounded</option>
-          <option value="extra-rounded">extra-rounded</option>
+          <option value="square">■ Square (เหลี่ยม)</option>
+          <option value="dots">● Dots (จุดกลม)</option>
+          <option value="rounded">◉ Rounded (มนมุม)</option>
+          <option value="classy">◆ Classy (คลาสสิค)</option>
+          <option value="classy-rounded">◇ Classy Rounded</option>
+          <option value="extra-rounded">○ Extra Rounded (มนมาก)</option>
         </select>
 
         <label>รูปแบบกรอบ (ตา):</label>
         <select id="cornerSquareStyle">
-          <option value="square" selected>Square</option>
-          <option value="extra-rounded">Extra Rounded</option>
-          <option value="dot">Dot</option>
+          <option value="square" selected>■ Square</option>
+          <option value="extra-rounded">◉ Extra Rounded</option>
+          <option value="dot">● Dot</option>
         </select>
 
         <label>รูปแบบจุด (ในตา):</label>
         <select id="cornerDotStyle">
-          <option value="square" selected>Square</option>
-          <option value="dot">Dot</option>
+          <option value="square" selected>■ Square</option>
+          <option value="dot">● Dot</option>
         </select>
       </div>
     </details>
@@ -163,10 +273,22 @@
         </select>
 
         <label>ความละเอียด (typeNumber):</label>
-        <input type="number" id="typeNumber" min="1" max="40" value="10" />
+        <div class="type-number-toggle">
+          <div class="auto-type-info" id="autoTypeInfo">
+            <span class="auto-badge">AUTO</span>
+            <span>ปรับอัตโนมัติตามความยาวข้อมูล</span>
+          </div>
+          <label class="checkbox-label">
+            <input type="checkbox" id="customTypeNumber" />
+            <span>กำหนดเอง</span>
+          </label>
+          <div id="manualTypeNumber" style="display: none;">
+            <input type="number" id="typeNumber" min="1" max="40" value="10" />
+          </div>
+        </div>
 
         <label>ขนาด QR (px):</label>
-        <input type="number" id="qrSize" min="100" max="1000" value="400" />
+        <input type="number" id="qrSize" min="100" max="2000" value="400" />
 
         <label>ระยะห่างขอบ (Padding):</label>
         <input type="range" id="qrMargin" min="0" max="50" value="10" step="1" title="ระยะห่างขอบ" />

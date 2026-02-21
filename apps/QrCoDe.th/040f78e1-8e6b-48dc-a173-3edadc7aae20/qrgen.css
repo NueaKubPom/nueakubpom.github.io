@@ -21,7 +21,7 @@ textarea {
   width: 100%;
   height: 80px;
   resize: none;
-  font-family: 'Kanit', sans-serif;
+  font-family: "Kanit", sans-serif;
   box-sizing: border-box;
 }
 
@@ -156,6 +156,204 @@ details[open] summary {
   box-shadow: 0 0 15px rgba(46, 204, 113, 0.3) !important;
 }
 
+/* ===== Preset Theme Grid ===== */
+.preset-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.preset-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 6px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #ccc;
+  font-family: "Kanit", sans-serif;
+  font-size: 0.8rem;
+}
+
+.preset-btn:hover {
+  border-color: var(--accent-color, #d4af37);
+  background: rgba(212, 175, 55, 0.1);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
+}
+
+.preset-btn:active {
+  transform: translateY(0);
+}
+
+.preset-preview {
+  display: block;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  transition: transform 0.3s;
+}
+
+.preset-btn:hover .preset-preview {
+  transform: scale(1.1);
+}
+
+.preset-applied {
+  border-color: #2ecc71 !important;
+  box-shadow: 0 0 20px rgba(46, 204, 113, 0.4) !important;
+}
+
+@keyframes presetPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.4);
+  }
+  100% {
+    box-shadow: 0 0 0 10px rgba(46, 204, 113, 0);
+  }
+}
+
+.preset-applied {
+  animation: presetPulse 0.6s ease-out;
+}
+
+/* ===== Randomize Button ===== */
+.btn-randomize {
+  width: 100%;
+  padding: 14px 20px;
+  font-family: "Kanit", sans-serif;
+  font-size: 1.05rem;
+  background: linear-gradient(
+    135deg,
+    rgba(123, 47, 247, 0.2),
+    rgba(96, 239, 255, 0.2)
+  );
+  border: 1px solid rgba(123, 47, 247, 0.4);
+  border-radius: 12px;
+  color: #e0d0ff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  letter-spacing: 0.5px;
+}
+
+.btn-randomize:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(123, 47, 247, 0.35),
+    rgba(96, 239, 255, 0.35)
+  );
+  border-color: rgba(123, 47, 247, 0.7);
+  box-shadow: 0 0 20px rgba(123, 47, 247, 0.3);
+  transform: translateY(-1px);
+}
+
+.btn-randomize:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+/* ===== Auto TypeNumber Badge ===== */
+.auto-type-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 15px;
+  background: rgba(46, 204, 113, 0.08);
+  border: 1px solid rgba(46, 204, 113, 0.25);
+  border-radius: 10px;
+  margin-top: 6px;
+}
+
+.auto-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  background: linear-gradient(135deg, #2ecc71, #27ae60);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: bold;
+  border-radius: 6px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.auto-type-info span:last-child {
+  color: #aaa;
+  font-size: 0.85rem;
+}
+
+/* TypeNumber Toggle */
+.type-number-toggle {
+  margin-top: 6px;
+}
+
+.checkbox-label {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  cursor: pointer;
+  color: #ccc;
+  font-size: 0.9rem;
+  user-select: none;
+}
+
+.checkbox-label input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--accent-color, #d4af37);
+  cursor: pointer;
+}
+
+#manualTypeNumber {
+  margin-top: 8px;
+  animation: fadeInUp 0.3s ease-out;
+}
+
+#manualTypeNumber input {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ===== Special Input Areas ===== */
+.special-input-area {
+  width: 100%;
+  box-sizing: border-box;
+  animation: fadeInUp 0.4s ease-out;
+}
+
+.special-input-area label {
+  margin-top: 10px;
+}
+
+.special-input-area input,
+.special-input-area textarea,
+.special-input-area select {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.special-input-area textarea {
+  height: 60px;
+}
+
+/* ===== Select optgroup styling ===== */
+select optgroup {
+  font-weight: bold;
+  color: #d4af37;
+  background: #1c1c2e;
+}
+
+select option {
+  font-weight: normal;
+  color: #fff;
+  background: #1c1c2e;
+  padding: 6px;
+}
+
 /* --- Mobile Responsiveness --- */
 @media (max-width: 600px) {
   .container {
@@ -185,5 +383,10 @@ details[open] summary {
   .qr-preview img {
     max-width: 100%;
     height: auto !important;
+  }
+
+  /* Preset grid: 2 columns on mobile */
+  .preset-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
