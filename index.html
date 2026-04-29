@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NueaKubPom</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            kanit: ['Kanit', 'sans-serif'],
+          },
+          boxShadow: {
+            glass: '0 24px 80px rgba(0, 0, 0, 0.45)',
+            glow: '0 0 0 1px rgba(255,255,255,0.06), 0 20px 40px rgba(23, 26, 46, 0.55)',
+          },
+          colors: {
+            accent: '#89a7ff',
+            accent2: '#63e6d9',
+          },
+        },
+      },
+    };
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  <link rel="icon" href="NKP-NT Studio Logo.png" type="image/png">
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body class="font-kanit">
+  <div class="page-shell">
+    <div class="ambient ambient-a"></div>
+    <div class="ambient ambient-b"></div>
+    <div class="ambient-grid"></div>
+
+    <main class="mx-auto flex min-h-screen w-full max-w-7xl items-center px-4 py-8 sm:px-6 lg:px-8">
+      <section class="glass-stage grid w-full overflow-hidden rounded-[32px] border border-white/10 bg-white/5 shadow-glass backdrop-blur-2xl lg:grid-cols-[1.1fr_0.9fr]">
+        <div class="relative flex flex-col justify-between gap-10 px-6 py-8 sm:px-8 sm:py-10 lg:px-12 lg:py-12">
+          <div class="absolute -left-20 top-12 h-40 w-40 rounded-full bg-accent/20 blur-3xl"></div>
+          <div class="absolute bottom-0 left-20 h-32 w-32 rounded-full bg-accent2/20 blur-3xl"></div>
+
+          <div class="relative z-10 flex items-center justify-between gap-4">
+            <div class="inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-white/75 shadow-glow backdrop-blur-xl">
+              <span class="inline-flex h-2.5 w-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              Creative Link Portal
+            </div>
+            <div class="hidden rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-white/60 backdrop-blur-xl sm:block">
+              NKPNT Studio
+            </div>
+          </div>
+
+          <div class="relative z-10 space-y-8">
+            <div class="flex items-center gap-5">
+              <div class="logo-orb">
+                <img src="NKP-NT Studio Logo.png" alt="NKP-NT Studio Logo" class="site-logo-img">
+              </div>
+              <div class="space-y-2">
+                <p class="text-sm uppercase tracking-[0.28em] text-white/45">Digital Presence</p>
+                <h1 class="brand-title">
+                  <span class="main-brand">NueaKubPom</span>
+                </h1>
+              </div>
+            </div>
+
+            <div class="max-w-2xl space-y-4">
+              <div class="typing-wrap">
+                <i class="fa-solid fa-sparkles text-accent2"></i>
+                <span class="typing-container" id="typing-text"></span>
+              </div>
+              <p class="hero-copy">
+                รวมช่องทางติดต่อ ผลงาน และเครื่องมือเด่นของสตูดิโอไว้ในหน้าเดียว
+                ด้วยโทน dark glass ที่คม ลื่น และดูทันสมัยมากขึ้น
+              </p>
+            </div>
+
+            <div class="hero-stats">
+              <div class="stat-chip">
+                <i class="fa-solid fa-bolt"></i>
+                <span>Fast access</span>
+              </div>
+              <div class="stat-chip">
+                <i class="fa-solid fa-layer-group"></i>
+                <span>All-in-one links</span>
+              </div>
+              <div class="stat-chip">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                <span>Modern glass UI</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="relative z-10">
+            <div class="scroll-hint">
+              <span>เลือกปลายทางที่ต้องการ</span>
+              <i class="fa-solid fa-arrow-down-long"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="relative border-t border-white/10 bg-black/10 px-5 py-5 sm:px-6 sm:py-6 lg:border-l lg:border-t-0 lg:px-7 lg:py-7">
+          <div class="panel-shine"></div>
+          <div class="relative z-10 flex h-full flex-col">
+            <div class="mb-5 flex items-center justify-between gap-4">
+              <div>
+                <p class="text-sm uppercase tracking-[0.24em] text-white/40">Quick Launch</p>
+                <h2 class="text-2xl font-semibold text-white">Explore the network</h2>
+              </div>
+              <div class="inline-flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 bg-white/10 text-lg text-white/75 shadow-glow backdrop-blur-xl">
+                <i class="fa-solid fa-table-cells-large"></i>
+              </div>
+            </div>
+
+            <div id="links-container" class="links-grid"></div>
+
+            <footer class="footer mt-6">
+              <p>&copy; 2024-<span id="current-year"></span> NueaKubPom. All Rights Reserved.</p>
+            </footer>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+
+</html>

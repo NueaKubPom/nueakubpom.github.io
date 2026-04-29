@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NueaKubPom Admin</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            kanit: ['Kanit', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  <link rel="icon" href="NKP-NT Studio Logo.png" type="image/png">
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body class="font-kanit">
+  <div class="page-shell">
+    <div class="ambient ambient-a"></div>
+    <div class="ambient ambient-b"></div>
+    <div class="ambient-grid"></div>
+
+    <main class="mx-auto flex min-h-screen w-full max-w-7xl items-center px-4 py-8 sm:px-6 lg:px-8">
+      <section class="glass-stage grid w-full overflow-hidden rounded-[32px] border border-white/10 bg-white/5 shadow-[0_24px_80px_rgba(0,0,0,0.45)] backdrop-blur-2xl xl:grid-cols-[0.95fr_1.05fr]">
+        <div class="relative flex flex-col gap-8 border-b border-white/10 px-6 py-8 sm:px-8 lg:border-b-0 lg:border-r lg:px-10 lg:py-10">
+          <div class="absolute left-10 top-10 h-36 w-36 rounded-full bg-indigo-400/15 blur-3xl"></div>
+          <div class="absolute bottom-0 right-10 h-28 w-28 rounded-full bg-cyan-300/10 blur-3xl"></div>
+
+          <div class="relative z-10 flex items-start justify-between gap-4">
+            <div class="space-y-4">
+              <a href="index.html" class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-white/70 backdrop-blur-xl transition hover:border-white/20 hover:text-white">
+                <i class="fa-solid fa-arrow-left"></i>
+                <span>กลับหน้าหลัก</span>
+              </a>
+
+              <div class="space-y-3">
+                <p class="text-sm uppercase tracking-[0.24em] text-white/40">Control Center</p>
+                <h1 class="m-0 text-4xl font-semibold text-white sm:text-5xl">จัดการลิงก์</h1>
+                <p class="max-w-xl text-base leading-8 text-white/70">
+                  ปรับแต่งรายการลิงก์, icon, และปลายทางได้จากหน้าเดียว
+                  แล้วคัดลอก JSON ที่พร้อมนำไปใช้ต่อได้ทันที
+                </p>
+              </div>
+            </div>
+
+            <div class="logo-orb shrink-0">
+              <img src="NKP-NT Studio Logo.png" alt="NKP-NT Studio Logo" class="site-logo-img">
+            </div>
+          </div>
+
+          <div class="relative z-10 grid gap-4 sm:grid-cols-3">
+            <div class="stat-chip">
+              <i class="fa-solid fa-icons"></i>
+              <span>Font Awesome</span>
+            </div>
+            <div class="stat-chip">
+              <i class="fa-solid fa-pen-ruler"></i>
+              <span>Glass workflow</span>
+            </div>
+            <div class="stat-chip">
+              <i class="fa-solid fa-code"></i>
+              <span>JSON export</span>
+            </div>
+          </div>
+
+          <div class="relative z-10 rounded-[28px] border border-white/10 bg-black/10 p-5 backdrop-blur-xl">
+            <div class="mb-4 flex items-center justify-between gap-4">
+              <div>
+                <p class="m-0 text-sm uppercase tracking-[0.22em] text-white/35">Live List</p>
+                <h2 class="m-0 mt-1 text-2xl font-semibold text-white">ลิงก์ปัจจุบัน</h2>
+              </div>
+              <div class="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-white/10 text-white/75">
+                <i class="fa-solid fa-list-check"></i>
+              </div>
+            </div>
+            <div id="links-list" class="admin-links-list"></div>
+          </div>
+        </div>
+
+        <div class="relative px-6 py-8 sm:px-8 lg:px-10 lg:py-10">
+          <div class="panel-shine"></div>
+          <div class="relative z-10 space-y-6">
+            <section class="rounded-[28px] border border-white/10 bg-black/10 p-5 backdrop-blur-xl">
+              <div class="mb-5 flex items-center justify-between gap-4">
+                <div>
+                  <p class="m-0 text-sm uppercase tracking-[0.22em] text-white/35">Create</p>
+                  <h2 class="m-0 mt-1 text-2xl font-semibold text-white">เพิ่มลิงก์ใหม่</h2>
+                </div>
+                <div class="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-white/10 text-white/75">
+                  <i class="fa-solid fa-plus"></i>
+                </div>
+              </div>
+
+              <form id="add-form" class="space-y-4">
+                <div class="grid gap-4 sm:grid-cols-2">
+                  <div>
+                    <label for="link-id" class="admin-label">ID</label>
+                    <input type="text" id="link-id" placeholder="instagram" required />
+                  </div>
+                  <div>
+                    <label for="link-target" class="admin-label">Target</label>
+                    <select id="link-target">
+                      <option value="_self">เปิดหน้าเดิม (_self)</option>
+                      <option value="_blank">เปิดแท็บใหม่ (_blank)</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <label for="link-icon" class="admin-label">Font Awesome Icon Class</label>
+                  <input type="text" id="link-icon" placeholder="fa-brands fa-instagram" required />
+                  <p class="admin-help">ใช้รูปแบบ class เช่น <code>fa-solid fa-qrcode</code> หรือ <code>fa-brands fa-youtube</code></p>
+                </div>
+
+                <div>
+                  <label for="link-text" class="admin-label">ชื่อปุ่ม</label>
+                  <input type="text" id="link-text" placeholder="Instagram" required />
+                </div>
+
+                <div>
+                  <label for="link-url" class="admin-label">URL</label>
+                  <input type="url" id="link-url" placeholder="https://..." required />
+                </div>
+
+                <div class="admin-preview-card">
+                  <div class="admin-preview-head">
+                    <span>Preview</span>
+                    <span id="preview-target" class="admin-preview-pill">_blank</span>
+                  </div>
+                  <div class="button-link admin-preview-link">
+                    <span class="link-icon-wrap"><i id="preview-icon" class="fa-solid fa-icons"></i></span>
+                    <span class="link-copy">
+                      <span id="preview-text" class="link-label">ชื่อปุ่มของคุณ</span>
+                      <span id="preview-meta" class="link-meta">Open destination</span>
+                    </span>
+                    <span class="link-arrow"><i class="fa-solid fa-arrow-up-right-from-square"></i></span>
+                  </div>
+                </div>
+
+                <button type="submit" class="admin-action-button">
+                  <i class="fa-solid fa-circle-plus"></i>
+                  <span>เพิ่มลิงก์</span>
+                </button>
+              </form>
+            </section>
+
+            <section class="rounded-[28px] border border-white/10 bg-black/10 p-5 backdrop-blur-xl">
+              <div class="mb-5 flex items-center justify-between gap-4">
+                <div>
+                  <p class="m-0 text-sm uppercase tracking-[0.22em] text-white/35">Export</p>
+                  <h2 class="m-0 mt-1 text-2xl font-semibold text-white">สร้าง JSON</h2>
+                </div>
+                <button id="generate-button" class="admin-secondary-button" type="button">
+                  <i class="fa-solid fa-file-code"></i>
+                  <span>Generate</span>
+                </button>
+              </div>
+
+              <div id="save-area" class="hidden space-y-3">
+                <p class="m-0 text-sm leading-7 text-white/65">
+                  คัดลอกข้อมูลด้านล่างแล้วนำไปแทนที่ในไฟล์ <code>links.json</code>
+                </p>
+                <textarea id="json-output" readonly class="admin-json-output"></textarea>
+              </div>
+            </section>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="edit-modal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="mb-5 flex items-center justify-between gap-4">
+        <div>
+          <p class="m-0 text-sm uppercase tracking-[0.22em] text-white/35">Edit Item</p>
+          <h2 class="m-0 mt-1 text-2xl font-semibold text-white">แก้ไขลิงก์</h2>
+        </div>
+        <button type="button" id="close-edit-top" class="admin-icon-button" aria-label="Close edit dialog">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <form id="edit-form" class="space-y-4">
+        <input type="hidden" id="edit-index" />
+
+        <div class="grid gap-4 sm:grid-cols-2">
+          <div>
+            <label for="edit-id" class="admin-label">ID</label>
+            <input type="text" id="edit-id" required />
+          </div>
+          <div>
+            <label for="edit-target" class="admin-label">Target</label>
+            <select id="edit-target">
+              <option value="_self">เปิดหน้าเดิม (_self)</option>
+              <option value="_blank">เปิดแท็บใหม่ (_blank)</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label for="edit-icon" class="admin-label">Font Awesome Icon Class</label>
+          <input type="text" id="edit-icon" required />
+        </div>
+
+        <div>
+          <label for="edit-text" class="admin-label">ชื่อปุ่ม</label>
+          <input type="text" id="edit-text" required />
+        </div>
+
+        <div>
+          <label for="edit-url" class="admin-label">URL</label>
+          <input type="text" id="edit-url" placeholder="https://..." required />
+        </div>
+
+        <div class="flex flex-col gap-3 pt-2 sm:flex-row">
+          <button type="submit" class="admin-action-button sm:flex-1">
+            <i class="fa-solid fa-floppy-disk"></i>
+            <span>บันทึกการแก้ไข</span>
+          </button>
+          <button type="button" id="cancel-edit" class="admin-secondary-button sm:flex-1">
+            <i class="fa-solid fa-ban"></i>
+            <span>ยกเลิก</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="admin.js"></script>
+</body>
+
+</html>

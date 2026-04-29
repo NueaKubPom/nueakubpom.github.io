@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>QR Generator X NKPNT</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            kanit: ['Kanit', 'sans-serif'],
+          },
+          boxShadow: {
+            glass: '0 24px 80px rgba(0, 0, 0, 0.45)',
+          },
+        },
+      },
+    };
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  <link rel="icon" href="../../../NKP-NT Studio Logo.png" type="image/png">
+</head>
+
+<body class="min-h-screen overflow-x-hidden bg-[linear-gradient(135deg,_#060b16,_#0d1630_55%,_#040814)] font-kanit text-slate-100">
+  <div class="fixed inset-0 -z-10 overflow-hidden">
+    <div class="absolute left-[-8%] top-[5%] h-72 w-72 rounded-full bg-indigo-400/20 blur-3xl"></div>
+    <div class="absolute bottom-[4%] right-[-8%] h-80 w-80 rounded-full bg-cyan-300/15 blur-3xl"></div>
+    <div class="absolute inset-0 opacity-40 [background-image:linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] [background-size:40px_40px] [mask-image:radial-gradient(circle_at_center,black_35%,transparent_85%)]"></div>
+  </div>
+
+  <main class="mx-auto flex min-h-screen w-full max-w-[1600px] items-center px-4 py-6 sm:px-6 lg:px-8">
+    <section class="grid w-full overflow-hidden rounded-[32px] border border-white/10 bg-white/5 shadow-glass backdrop-blur-2xl xl:grid-cols-[0.95fr_1.05fr]">
+      <aside class="border-b border-white/10 px-5 py-6 xl:border-b-0 xl:border-r xl:px-8 xl:py-8">
+        <div class="flex h-full flex-col gap-6">
+          <div class="flex items-start justify-between gap-4">
+            <div class="space-y-4">
+              <a href="../../../index.html" class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-white/75 backdrop-blur-xl transition hover:border-white/20 hover:text-white">
+                <i class="fa-solid fa-arrow-left"></i>
+                <span>กลับหน้าหลัก</span>
+              </a>
+
+              <div class="space-y-3">
+                <p class="text-sm uppercase tracking-[0.24em] text-white/40">QR Design Studio</p>
+                <h1 class="text-4xl font-semibold text-white sm:text-5xl">QR Generator</h1>
+                <div class="inline-flex min-h-12 items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white/85 backdrop-blur-xl">
+                  <i class="fa-solid fa-sparkles text-cyan-300"></i>
+                  <span id="typing-text" class="min-h-[1.7em] min-w-[18ch] border-r-2 border-cyan-300 pr-2 text-base font-medium"></span>
+                </div>
+                <p class="max-w-2xl text-base leading-8 text-white/70">
+                  สร้าง QR Code แบบปรับแต่งได้ละเอียด ทั้ง content, theme, shape,
+                  gradient, logo และ export พร้อมใช้งาน
+                </p>
+              </div>
+            </div>
+
+            <div class="flex h-24 w-24 shrink-0 items-center justify-center rounded-[28px] border border-white/10 bg-white/10 p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_18px_40px_rgba(0,0,0,0.28)] backdrop-blur-xl">
+              <img src="../../../NKP-NT Studio Logo.png" alt="NKP-NT Studio Logo" class="h-full w-full object-contain" />
+            </div>
+          </div>
+
+          <div class="flex flex-wrap gap-3">
+            <div class="inline-flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white/80"><i class="fa-solid fa-qrcode text-cyan-300"></i><span>Live preview</span></div>
+            <div class="inline-flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white/80"><i class="fa-solid fa-palette text-cyan-300"></i><span>Theme presets</span></div>
+            <div class="inline-flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white/80"><i class="fa-solid fa-file-arrow-down text-cyan-300"></i><span>Export PNG</span></div>
+          </div>
+
+          <section class="rounded-[28px] border border-white/10 bg-black/10 p-4 backdrop-blur-xl sm:p-5">
+            <div class="mb-4 flex items-center justify-between gap-4">
+              <div>
+                <p class="text-sm uppercase tracking-[0.22em] text-white/35">Preview</p>
+                <h2 class="mt-1 text-2xl font-semibold text-white">ผลลัพธ์แบบสด</h2>
+              </div>
+              <div class="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-white/10 text-white/75">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+              </div>
+            </div>
+
+            <div class="relative flex min-h-[340px] items-center justify-center overflow-hidden rounded-[28px] border border-white/10 bg-[linear-gradient(160deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03))] p-4 sm:min-h-[420px]">
+              <div class="absolute inset-0 opacity-40 [background-image:linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] [background-size:24px_24px] [mask-image:radial-gradient(circle_at_center,black_35%,transparent_85%)]"></div>
+              <div id="qr-code" class="relative z-10 flex w-full justify-center"></div>
+            </div>
+
+            <div class="mt-4 grid gap-3 sm:grid-cols-2">
+              <button onclick="generateQR()" class="inline-flex min-h-14 items-center justify-center gap-3 rounded-2xl border border-indigo-300/20 bg-[linear-gradient(135deg,rgba(138,166,255,0.32),rgba(103,228,217,0.18))] px-4 py-3 text-base font-medium text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_16px_26px_rgba(43,66,150,0.18)] transition hover:-translate-y-0.5 hover:border-indigo-200/30" type="button">
+                <i class="fa-solid fa-bolt"></i>
+                <span>สร้าง QR</span>
+              </button>
+              <button onclick="downloadQR()" class="inline-flex min-h-14 items-center justify-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-base font-medium text-white transition hover:-translate-y-0.5 hover:border-white/20 hover:bg-white/10" type="button">
+                <i class="fa-solid fa-download"></i>
+                <span>ดาวน์โหลด</span>
+              </button>
+            </div>
+          </section>
+        </div>
+      </aside>
+
+      <section class="px-5 py-6 xl:px-8 xl:py-8">
+        <div class="flex max-h-[calc(100vh-4rem)] flex-col gap-4 overflow-auto pr-1">
+          <section class="rounded-[28px] border border-white/10 bg-black/10 p-4 backdrop-blur-xl sm:p-5">
+            <div class="mb-4 flex items-center justify-between gap-4">
+              <div>
+                <p class="text-sm uppercase tracking-[0.22em] text-white/35">Content</p>
+                <h2 class="mt-1 text-2xl font-semibold text-white">ข้อมูลสำหรับ QR</h2>
+              </div>
+              <div class="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-white/10 text-white/75">
+                <i class="fa-solid fa-link"></i>
+              </div>
+            </div>
+
+            <div class="grid gap-4 md:grid-cols-2">
+              <div>
+                <label class="mb-2 inline-block text-sm text-white/75" for="dataType">ประเภทข้อมูล</label>
+                <select id="dataType" class="min-h-14 w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition focus:border-indigo-300/40 focus:bg-white/[0.07]">
+                  <optgroup label="ข้อความและลิงก์">
+                    <option value="text">ข้อความทั่วไป</option>
+                    <option value="url">URL / ลิงก์เว็บ</option>
+                  </optgroup>
+                  <optgroup label="การสื่อสาร">
+                    <option value="email">อีเมล</option>
+                    <option value="phone">เบอร์โทรศัพท์</option>
+                    <option value="sms">SMS</option>
+                    <option value="line">LINE ID</option>
+                  </optgroup>
+                  <optgroup label="Social">
+                    <option value="facebook">Facebook</option>
+                    <option value="instagram">Instagram</option>
+                    <option value="youtube">YouTube</option>
+                    <option value="tiktok">TikTok</option>
+                  </optgroup>
+                  <optgroup label="ข้อมูลขั้นสูง">
+                    <option value="wifi">WiFi</option>
+                    <option value="vcard">นามบัตร vCard</option>
+                    <option value="geo">พิกัด GPS / แผนที่</option>
+                    <option value="event">กิจกรรม / Calendar</option>
+                  </optgroup>
+                </select>
+              </div>
+
+              <div>
+                <label class="mb-2 inline-block text-sm text-white/75" for="filename">ชื่อไฟล์</label>
+                <input type="text" id="filename" placeholder="my-qr" class="min-h-14 w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder:text-white/35 outline-none transition focus:border-indigo-300/40 focus:bg-white/[0.07]" />
+              </div>
+            </div>
+
+            <div id="text-input-area" class="mt-4">
+              <label class="mb-2 inline-block text-sm text-white/75" for="qrText">ข้อความหรือลิงก์</label>
+              <textarea id="qrText" placeholder="ข้อความหรือลิงก์..." class="min-h-[180px] w-full rounded-[24px] border border-white/10 bg-white/5 px-4 py-4 text-base leading-7 text-white placeholder:text-white/35 outline-none transition focus:border-indigo-300/40 focus:bg-white/[0.07]"></textarea>
+            </div>
+
+            <div id="wifi-input-area" class="mt-4 hidden space-y-4">
+              <div>
+                <label class="mb-2 inline-block text-sm text-white/75" for="wifiSSID">ชื่อเครือข่าย (SSID)</label>
+                <input type="text" id="wifiSSID" placeholder="ชื่อ WiFi" class="min-h-14 w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder:text-white/35 outline-none transition focus:border-indigo-300/40 focus:bg-white/[0.07]" />
+              </div>
+              <div>
+                <label class="mb-2 inline-block text-sm text-white/75" for="wifiPass">รหัสผ่าน</label>
+                <input type="text" id="wifiPass" placeholder="รหัสผ่าน WiFi" class="min-h-14 w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder:text-white/35 outline-none transition focus:border-indigo-300/40 focus:bg-white/[0.07]" />
+              </div>
+              <div>
+                <label class="mb-2 inline-block text-sm text-white/75" for="wifiEnc">ประเภทการเข้ารหัส</label>
+                <select id="wifiEnc" class="min-h-14 w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition focus:border-indigo-300/40 focus:bg-white/[0.07]">
+                  <option value="WPA" selected>WPA/WPA2</option>
+                  <option value="WEP">WEP</option>
+                  <option value="nopass">ไม่มีรหัสผ่าน</option>
+                </select>
+              </div>
+            </div>
+
+            <div id="sms-input-area" class="mt-4 hidden space-y-4">
+              <div>
+                <label class="mb-2 inline-block text-sm text-white/75" for="smsNumber">เบอร์ผู้รับ</label>
+                <input type="text" id="smsNumber" placeholder="0812345678" class="min-h-14 w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder:text-white/35 outline-none transition focus:border-indigo-300/40 focus:bg-white/[0.07]" />
+              </div>
+              <div>
+                <label class="mb-2 inline-block text-sm text-white/75" for="smsBody">ข้อความ</label>
+                <textarea id="smsBody" placeholder="ข้อความ SMS..." class="min-h-[140px] w-full rounded-[24px] border border-white/10 bg-white/5 px-4 py-4 text-base leading-7 text-white placeholder:text-white/35 outline-none transition focus:border-indigo-300/40 focus:bg-white/[0.07]"></textarea>
+              </div>
+            </div>
+
+            <div id="vcard-input-area" class="mt-4 hidden space-y-4">
+              <div class="grid gap-4 md:grid-cols-2">
+                <div>
+                  <label class="mb-2 inline-block text-sm text-white/75" for="vcardName">ชื่อ - นามสกุล</label>
+                  <input type="text" id="vcardName" placeholder="สมชาย ใจดี" class="min-h-14 w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder:text-white/35 outline-none transition focus:border-indigo-300/40 focus:bg-white/[0.07]" />
+                </div>
+                <div>
+                  <label class="mb-2 inline-block text-sm text-white/75" for="vcardPhone">เบอร์โทร</label>
+                  <input type="text" id="vcardPhone" placeholder="0812345678" class="min-h-14 w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder:text-white/35 outline-none transition focus:border-indigo-300/40 focus:bg-white/[0.07]" />
+                </div>
+              </div>
+              <div class="grid gap-4 md:grid-cols-2">
+                <div>
+                  <label class="mb-2 inline-block text-sm text-white/75" for="vcardEmail">อีเมล</label>
+                  <input type="text" id="vcardEmail" placeholder="example@mail.com" class="min-h-14 w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder:text-white/35 outline-none transition focus:border-indigo-300/40 focus:bg-white/[0.07]" />
+                </div>
+                <div>
+                  <label class="mb-2 inline-block text-sm text-white/75" for="vcardOrg">บริษัท / องค์กร</label>
+                  <input type="text" id="vcardOrg" placeholder="ชื่อบริษัท" class="min-h-14 w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder:text-white/35 outline-none transition focus:border-indigo-300/40 focus:bg-white/[0.07]" />
+                </div>
+              </div>
+              <div class="grid gap-4 md:grid-cols-2">
+                <div>
+                  <label class="mb-2 inline-block text-sm text-white/75" for="vcardTitle">ตำแหน่ง</label>
+                  <input type="text" id="vcardTitle" placeholder="ตำแหน่งงาน" class="min-h-14 w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder:text-white/35 outline-none transition focus:border-indigo-300/40 focus:bg-white/[0.07]" />
+                </div>
+                <div>
+                  <label class="mb-2 inline-block text-sm text-white/75" for="vcardUrl">เว็บไซต์</label>
+                  <input type="text" id="vcardUrl" placeholder="https://..." class="min-h-14 w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder:text-white/35 outline-none transition focus:border-indigo-300/40 focus:bg-white/[0.07]" />
+                </div>
+              </div>
+              <div>
+                <label class="mb-2 inline-block text-sm text-white/75" for="vcardAddress">ที่อยู่</label>
+                <textarea id="vcardAddress" placeholder="ที่อยู่" class="min-h-[140px] w-full rounded-[24px] border border-white/10 bg-white/5 px-4 py-4 text-base leading-7 text-white placeholder:text-white/35 outline-none transition focus:border-indigo-300/40 focus:bg-white/[0.07]"></textarea>
+              </div>
+            </div>
+
+            <div id="geo-input-area" class="mt-4 hidden space-y-4">
+              <div class="grid gap-4 md:grid-cols-2">
+                <div>
+                  <label class="mb-2 inline-block text-sm text-white/75" for="geoLat">Latitude</label>
+                  <input type="number" id="geoLat" step="any" placeholder="13.7563" class="min-h-14 w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder:text-white/35 outline-none transition focus:border-indigo-300/40 focus:bg-white/[0.07]" />
+                </div>
+                <div>
+                  <label class="mb-2 inline-block text-sm text-white/75" for="geoLng">Longitude</label>
+                  <input type="number" id="geoLng" step="any" placeholder="100.5018" class="min-h-14 w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder:text-white/35 outline-none transition focus:border-indigo-300/40 focus:bg-white/[0.07]" />
+                </div>
+              </div>
+              <div>
+                <label class="mb-2 inline-block text-sm text-white/75" for="geoLabel">ชื่อสถานที่</label>
+                <input type="text" id="geoLabel" placeholder="กรุงเทพฯ" class="min-h-14 w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder:text-white/35 outline-none transition focus:border-indigo-300/40 focus:bg-white/[0.07]" />
+              </div>
+            </div>
+
+            <div id="event-input-area" class="mt-4 hidden space-y-4">
+              <div>
+                <label class="mb-2 inline-block text-sm text-white/75" for="eventTitle">ชื่อกิจกรรม</label>
+                <input type="text" id="eventTitle" placeholder="ประชุมทีม" class="min-h-14 w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder:text-white/35 outline-none transition focus:border-indigo-300/40 focus:bg-white/[0.07]" />
+              </div>
+              <div class="grid gap-4 md:grid-cols-2">
+                <div>
+                  <label class="mb-2 inline-block text-sm text-white/75" for="eventStart">วันเวลาเริ่ม</label>
+                  <input type="datetime-local" id="eventStart" class="min-h-14 w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition focus:border-indigo-300/40 focus:bg-white/[0.07]" />
+                </div>
+                <div>
+                  <label class="mb-2 inline-block text-sm text-white/75" for="eventEnd">วันเวลาจบ</label>
+                  <input type="datetime-local" id="eventEnd" class="min-h-14 w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition focus:border-indigo-300/40 focus:bg-white/[0.07]" />
+                </div>
+              </div>
+              <div>
+                <label class="mb-2 inline-block text-sm text-white/75" for="eventLocation">สถานที่</label>
+                <input type="text" id="eventLocation" placeholder="สถานที่จัดงาน" class="min-h-14 w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder:text-white/35 outline-none transition focus:border-indigo-300/40 focus:bg-white/[0.07]" />
+              </div>
+              <div>
+                <label class="mb-2 inline-block text-sm text-white/75" for="eventDescription">รายละเอียด</label>
+                <textarea id="eventDescription" placeholder="รายละเอียดเพิ่มเติม" class="min-h-[140px] w-full rounded-[24px] border border-white/10 bg-white/5 px-4 py-4 text-base leading-7 text-white placeholder:text-white/35 outline-none transition focus:border-indigo-300/40 focus:bg-white/[0.07]"></textarea>
+              </div>
+            </div>
+          </section>
+
+          <section class="rounded-[28px] border border-white/10 bg-black/10 p-4 backdrop-blur-xl sm:p-5">
+            <div class="mb-4 flex items-center justify-between gap-4">
+              <div>
+                <p class="text-sm uppercase tracking-[0.22em] text-white/35">Themes</p>
+                <h2 class="mt-1 text-2xl font-semibold text-white">ธีมสำเร็จรูป</h2>
+              </div>
+              <div class="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-white/10 text-white/75">
+                <i class="fa-solid fa-swatchbook"></i>
+              </div>
+            </div>
+            <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              <button class="preset-btn flex min-h-24 flex-col items-center justify-center gap-2 rounded-3xl border border-white/10 bg-white/5 px-3 py-4 text-white transition hover:-translate-y-0.5 hover:border-white/20 hover:bg-white/10" onclick="applyPreset('classic', this)" type="button"><span class="h-10 w-10 rounded-xl border border-white/10 bg-[linear-gradient(135deg,#000_50%,#fff_50%)]"></span><span>Classic</span></button>
+              <button class="preset-btn flex min-h-24 flex-col items-center justify-center gap-2 rounded-3xl border border-white/10 bg-white/5 px-3 py-4 text-white transition hover:-translate-y-0.5 hover:border-white/20 hover:bg-white/10" onclick="applyPreset('ocean', this)" type="button"><span class="h-10 w-10 rounded-xl border border-white/10 bg-[linear-gradient(135deg,#0077b6,#00b4d8)]"></span><span>Ocean</span></button>
+              <button class="preset-btn flex min-h-24 flex-col items-center justify-center gap-2 rounded-3xl border border-white/10 bg-white/5 px-3 py-4 text-white transition hover:-translate-y-0.5 hover:border-white/20 hover:bg-white/10" onclick="applyPreset('galaxy', this)" type="button"><span class="h-10 w-10 rounded-xl border border-white/10 bg-[linear-gradient(135deg,#7b2ff7,#c471ed)]"></span><span>Galaxy</span></button>
+              <button class="preset-btn flex min-h-24 flex-col items-center justify-center gap-2 rounded-3xl border border-white/10 bg-white/5 px-3 py-4 text-white transition hover:-translate-y-0.5 hover:border-white/20 hover:bg-white/10" onclick="applyPreset('sunset', this)" type="button"><span class="h-10 w-10 rounded-xl border border-white/10 bg-[linear-gradient(135deg,#f7971e,#ff6b6b)]"></span><span>Sunset</span></button>
+              <button class="preset-btn flex min-h-24 flex-col items-center justify-center gap-2 rounded-3xl border border-white/10 bg-white/5 px-3 py-4 text-white transition hover:-translate-y-0.5 hover:border-white/20 hover:bg-white/10" onclick="applyPreset('nature', this)" type="button"><span class="h-10 w-10 rounded-xl border border-white/10 bg-[linear-gradient(135deg,#11998e,#38ef7d)]"></span><span>Nature</span></button>
+              <button class="preset-btn flex min-h-24 flex-col items-center justify-center gap-2 rounded-3xl border border-white/10 bg-white/5 px-3 py-4 text-white transition hover:-translate-y-0.5 hover:border-white/20 hover:bg-white/10" onclick="applyPreset('neon', this)" type="button"><span class="h-10 w-10 rounded-xl border border-white/10 bg-[linear-gradient(135deg,#00ff87,#60efff)]"></span><span>Neon</span></button>
+              <button class="preset-btn flex min-h-24 flex-col items-center justify-center gap-2 rounded-3xl border border-white/10 bg-white/5 px-3 py-4 text-white transition hover:-translate-y-0.5 hover:border-white/20 hover:bg-white/10" onclick="applyPreset('cherry', this)" type="button"><span class="h-10 w-10 rounded-xl border border-white/10 bg-[linear-gradient(135deg,#ff6b9d,#ffa8cc)]"></span><span>Cherry</span></button>
+              <button class="preset-btn flex min-h-24 flex-col items-center justify-center gap-2 rounded-3xl border border-white/10 bg-white/5 px-3 py-4 text-white transition hover:-translate-y-0.5 hover:border-white/20 hover:bg-white/10" onclick="applyPreset('gold', this)" type="button"><span class="h-10 w-10 rounded-xl border border-white/10 bg-[linear-gradient(135deg,#d4af37,#f5d061)]"></span><span>Gold</span></button>
+            </div>
+            <button class="mt-4 inline-flex min-h-14 w-full items-center justify-center gap-3 rounded-2xl border border-indigo-300/20 bg-[linear-gradient(135deg,rgba(138,166,255,0.16),rgba(103,228,217,0.12))] px-4 py-3 text-white transition hover:-translate-y-0.5 hover:border-indigo-200/30" onclick="randomizeStyle()" type="button">
+              <i class="fa-solid fa-shuffle"></i>
+              <span>สุ่มสไตล์ทั้งหมด</span>
+            </button>
+          </section>
+
+          <section class="rounded-[28px] border border-white/10 bg-black/10 p-4 backdrop-blur-xl sm:p-5">
+            <div class="mb-4">
+              <p class="text-sm uppercase tracking-[0.22em] text-white/35">Shapes</p>
+              <h2 class="mt-1 text-2xl font-semibold text-white">รูปแบบจุดและกรอบ</h2>
+            </div>
+            <div class="space-y-4">
+              <div>
+                <label class="mb-2 inline-block text-sm text-white/75" for="dotStyle">รูปแบบจุด</label>
+                <select id="dotStyle" class="min-h-14 w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition focus:border-indigo-300/40 focus:bg-white/[0.07]">
+                  <option value="square">Square</option>
+                  <option value="dots">Dots</option>
+                  <option value="rounded">Rounded</option>
+                  <option value="classy">Classy</option>
+                  <option value="classy-rounded">Classy Rounded</option>
+                  <option value="extra-rounded">Extra Rounded</option>
+                </select>
+              </div>
+              <div class="grid gap-4 md:grid-cols-2">
+                <div>
+                  <label class="mb-2 inline-block text-sm text-white/75" for="cornerSquareStyle">รูปแบบกรอบตา</label>
+                  <select id="cornerSquareStyle" class="min-h-14 w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition focus:border-indigo-300/40 focus:bg-white/[0.07]">
+                    <option value="square" selected>Square</option>
+                    <option value="extra-rounded">Extra Rounded</option>
+                    <option value="dot">Dot</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="mb-2 inline-block text-sm text-white/75" for="cornerDotStyle">รูปแบบจุดตา</label>
+                  <select id="cornerDotStyle" class="min-h-14 w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition focus:border-indigo-300/40 focus:bg-white/[0.07]">
+                    <option value="square" selected>Square</option>
+                    <option value="dot">Dot</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="rounded-[28px] border border-white/10 bg-black/10 p-4 backdrop-blur-xl sm:p-5">
+            <div class="mb-4">
+              <p class="text-sm uppercase tracking-[0.22em] text-white/35">Colors</p>
+              <h2 class="mt-1 text-2xl font-semibold text-white">สีของจุดและพื้นหลัง</h2>
+            </div>
+            <div class="space-y-5">
+              <div class="space-y-4">
+                <div>
+                  <label class="mb-2 inline-block text-sm text-white/75" for="dotColorType">ประเภทสีจุด</label>
+                  <select id="dotColorType" class="min-h-14 w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition focus:border-indigo-300/40 focus:bg-white/[0.07]">
+                    <option value="solid" selected>สีทึบ</option>
+                    <option value="gradient">Gradient</option>
+                  </select>
+                </div>
+                <div class="grid gap-4 md:grid-cols-2">
+                  <div>
+                    <label class="mb-2 inline-block text-sm text-white/75" for="dotColor1">สีจุด 1</label>
+                    <input type="color" id="dotColor1" value="#000000" class="h-14 w-full rounded-2xl border border-white/10 bg-white/5 p-2" />
+                  </div>
+                  <div id="dotGradientOptions" class="hidden space-y-4 md:space-y-0 md:contents">
+                    <div>
+                      <label class="mb-2 inline-block text-sm text-white/75" for="dotColor2">สีจุด 2</label>
+                      <input type="color" id="dotColor2" value="#ff0000" class="h-14 w-full rounded-2xl border border-white/10 bg-white/5 p-2" />
+                    </div>
+                    <div>
+                      <label class="mb-2 inline-block text-sm text-white/75" for="dotGradientType">ประเภท Gradient</label>
+                      <select id="dotGradientType" class="min-h-14 w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition focus:border-indigo-300/40 focus:bg-white/[0.07]">
+                        <option value="linear">Linear</option>
+                        <option value="radial">Radial</option>
+                      </select>
+                    </div>
+                    <div class="md:col-span-2">
+                      <label class="mb-2 inline-block text-sm text-white/75" for="dotGradientRotation">มุม Gradient</label>
+                      <input type="number" id="dotGradientRotation" value="0" min="0" max="360" class="min-h-14 w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition focus:border-indigo-300/40 focus:bg-white/[0.07]" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="space-y-4">
+                <div>
+                  <label class="mb-2 inline-block text-sm text-white/75" for="bgType">ประเภทพื้นหลัง</label>
+                  <select id="bgType" class="min-h-14 w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition focus:border-indigo-300/40 focus:bg-white/[0.07]">
+                    <option value="solid" selected>สีทึบ</option>
+                    <option value="gradient">Gradient</option>
+                    <option value="transparent">โปร่งใส</option>
+                  </select>
+                </div>
+                <div id="bgColorOptions">
+                  <label class="mb-2 inline-block text-sm text-white/75" for="bgColor1">สีพื้นหลัง 1</label>
+                  <input type="color" id="bgColor1" value="#ffffff" class="h-14 w-full rounded-2xl border border-white/10 bg-white/5 p-2" />
+                </div>
+                <div id="bgGradientOptions" class="hidden space-y-4">
+                  <div>
+                    <label class="mb-2 inline-block text-sm text-white/75" for="bgColor2">สีพื้นหลัง 2</label>
+                    <input type="color" id="bgColor2" value="#eeeeff" class="h-14 w-full rounded-2xl border border-white/10 bg-white/5 p-2" />
+                  </div>
+                  <div class="grid gap-4 md:grid-cols-2">
+                    <div>
+                      <label class="mb-2 inline-block text-sm text-white/75" for="bgGradientType">ประเภท Gradient</label>
+                      <select id="bgGradientType" class="min-h-14 w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition focus:border-indigo-300/40 focus:bg-white/[0.07]">
+                        <option value="linear">Linear</option>
+                        <option value="radial">Radial</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label class="mb-2 inline-block text-sm text-white/75" for="bgGradientRotation">มุม Gradient</label>
+                      <input type="number" id="bgGradientRotation" value="0" min="0" max="360" class="min-h-14 w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition focus:border-indigo-300/40 focus:bg-white/[0.07]" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="rounded-[28px] border border-white/10 bg-black/10 p-4 backdrop-blur-xl sm:p-5">
+            <div class="mb-4">
+              <p class="text-sm uppercase tracking-[0.22em] text-white/35">Advanced</p>
+              <h2 class="mt-1 text-2xl font-semibold text-white">โลโก้และการตั้งค่าขั้นสูง</h2>
+            </div>
+            <div class="space-y-4">
+              <div>
+                <label class="mb-2 inline-block text-sm text-white/75" for="logoInput">โลโก้</label>
+                <input type="file" id="logoInput" accept="image/*" class="min-h-14 w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white file:mr-4 file:rounded-xl file:border-0 file:bg-white/10 file:px-3 file:py-2 file:text-white" />
+              </div>
+              <div>
+                <label class="mb-2 inline-block text-sm text-white/75" for="errorCorrection">Error Correction</label>
+                <select id="errorCorrection" class="min-h-14 w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition focus:border-indigo-300/40 focus:bg-white/[0.07]">
+                  <option value="L">L - ต่ำ</option>
+                  <option value="M">M - ปานกลาง</option>
+                  <option value="Q">Q - สูง</option>
+                  <option value="H" selected>H - สูงสุด</option>
+                </select>
+              </div>
+              <div class="space-y-3 rounded-[24px] border border-cyan-300/15 bg-cyan-300/5 p-4">
+                <div id="autoTypeInfo" class="flex items-center gap-3 rounded-2xl border border-cyan-300/15 bg-cyan-300/10 px-4 py-3 text-white/80">
+                  <span class="rounded-full bg-cyan-300/20 px-3 py-1 text-xs font-bold uppercase tracking-[0.16em] text-white">AUTO</span>
+                  <span>ปรับอัตโนมัติตามความยาวข้อมูล</span>
+                </div>
+                <label class="inline-flex items-center gap-3 text-white/80">
+                  <input type="checkbox" id="customTypeNumber" class="h-5 w-5 accent-indigo-300" />
+                  <span>กำหนด Type Number เอง</span>
+                </label>
+                <div id="manualTypeNumber" class="hidden">
+                  <input type="number" id="typeNumber" min="1" max="40" value="10" class="min-h-14 w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition focus:border-indigo-300/40 focus:bg-white/[0.07]" />
+                </div>
+              </div>
+              <div class="grid gap-4 md:grid-cols-2">
+                <div>
+                  <label class="mb-2 inline-block text-sm text-white/75" for="qrSize">ขนาด QR (px)</label>
+                  <input type="number" id="qrSize" min="100" max="2000" value="400" class="min-h-14 w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition focus:border-indigo-300/40 focus:bg-white/[0.07]" />
+                </div>
+                <div>
+                  <label class="mb-2 inline-block text-sm text-white/75" for="qrMargin">ระยะขอบ</label>
+                  <input type="range" id="qrMargin" min="0" max="50" value="10" step="1" class="mt-4 h-2 w-full accent-cyan-300" />
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/qr-code-styling@1.5.0/lib/qr-code-styling.js"></script>
+  <script src="qrgen.js"></script>
+</body>
+
+</html>

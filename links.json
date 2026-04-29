@@ -1,0 +1,58 @@
+[
+  {
+    "id": "qr",
+    "icon": "fa-solid fa-qrcode",
+    "text": "สร้าง QR Code (QR Gen Pro)",
+    "url": "./apps/QrCoDe.th/040f78e1-8e6b-48dc-a173-3edadc7aae20/qrgen.html",
+    "target": "_self"
+  },
+  {
+    "id": "discord",
+    "icon": "fa-brands fa-discord",
+    "text": "Discord",
+    "url": "https://discord.gg/mwESp83ngF",
+    "target": "_blank"
+  },
+  {
+    "id": "portfolio",
+    "icon": "fa-solid fa-eye",
+    "text": "Portfolio",
+    "url": "https://skwk34235-nuea.github.io/portfolio-nueaNKPNTSTO",
+    "target": "_blank"
+  },
+  {
+    "id": "facebook",
+    "icon": "fa-brands fa-facebook",
+    "text": "Facebook",
+    "url": "https://www.facebook.com/nueakubpomNKPNTSTO",
+    "target": "_blank"
+  },
+  {
+    "id": "instagram",
+    "icon": "fa-brands fa-instagram",
+    "text": "Instagram",
+    "url": "nkpntsto",
+    "target": "_blank"
+  },
+  {
+    "id": "line",
+    "icon": "fa-brands fa-line",
+    "text": "LINE",
+    "url": "https://line.me/ti/p/TqqKyp2nmc",
+    "target": "_blank"
+  },
+  {
+    "id": "tiktok",
+    "icon": "fa-brands fa-tiktok",
+    "text": "TikTok",
+    "url": "https://tiktok.com/@nkpnt_studio_nueakubpom",
+    "target": "_blank"
+  },
+  {
+    "id": "youtube",
+    "icon": "fa-brands fa-youtube",
+    "text": "YouTube",
+    "url": "https://youtube.com/@nkpnt_studio",
+    "target": "_blank"
+  }
+]
