@@ -127,6 +127,12 @@ const PRESETS = {
 
 // (A) ส่วนจัดการ UI และ Live Preview
 document.addEventListener("DOMContentLoaded", function () {
+  // Initialize AOS
+  AOS.init({
+    once: true,
+    offset: 50,
+  });
+
   // --- 0. Branding: Dynamic Year ---
   const yearSpan = document.getElementById("current-year");
   if (yearSpan) yearSpan.textContent = new Date().getFullYear();
@@ -635,19 +641,19 @@ function validateInput() {
   switch (dataType) {
     case "wifi":
       if (!document.getElementById("wifiSSID").value.trim()) {
-        alert("กรุณาใส่ชื่อเครือข่าย (SSID)");
+        Swal.fire({ icon: 'warning', title: 'ข้อมูลไม่ครบ', text: 'กรุณาใส่ชื่อเครือข่าย (SSID)', background: '#0a1128', color: '#fff', confirmButtonColor: '#00f3ff' });
         return false;
       }
       return true;
     case "sms":
       if (!document.getElementById("smsNumber").value.trim()) {
-        alert("กรุณาใส่เบอร์โทรผู้รับ SMS");
+        Swal.fire({ icon: 'warning', title: 'ข้อมูลไม่ครบ', text: 'กรุณาใส่เบอร์โทรผู้รับ SMS', background: '#0a1128', color: '#fff', confirmButtonColor: '#00f3ff' });
         return false;
       }
       return true;
     case "vcard":
       if (!document.getElementById("vcardName").value.trim()) {
-        alert("กรุณาใส่ชื่อ-นามสกุล");
+        Swal.fire({ icon: 'warning', title: 'ข้อมูลไม่ครบ', text: 'กรุณาใส่ชื่อ-นามสกุล', background: '#0a1128', color: '#fff', confirmButtonColor: '#00f3ff' });
         return false;
       }
       return true;
@@ -656,24 +662,24 @@ function validateInput() {
         !document.getElementById("geoLat").value ||
         !document.getElementById("geoLng").value
       ) {
-        alert("กรุณาใส่ละติจูดและลองจิจูด");
+        Swal.fire({ icon: 'warning', title: 'ข้อมูลไม่ครบ', text: 'กรุณาใส่ละติจูดและลองจิจูด', background: '#0a1128', color: '#fff', confirmButtonColor: '#00f3ff' });
         return false;
       }
       return true;
     case "event":
       if (!document.getElementById("eventTitle").value.trim()) {
-        alert("กรุณาใส่ชื่อกิจกรรม");
+        Swal.fire({ icon: 'warning', title: 'ข้อมูลไม่ครบ', text: 'กรุณาใส่ชื่อกิจกรรม', background: '#0a1128', color: '#fff', confirmButtonColor: '#00f3ff' });
         return false;
       }
       if (!document.getElementById("eventStart").value) {
-        alert("กรุณาเลือกวันเวลาเริ่มกิจกรรม");
+        Swal.fire({ icon: 'warning', title: 'ข้อมูลไม่ครบ', text: 'กรุณาเลือกวันเวลาเริ่มกิจกรรม', background: '#0a1128', color: '#fff', confirmButtonColor: '#00f3ff' });
         return false;
       }
       return true;
     default:
       // text, url, email, phone, line, facebook, instagram, youtube, tiktok
       if (!document.getElementById("qrText").value.trim()) {
-        alert("กรุณาใส่ข้อความหรือลิงก์");
+        Swal.fire({ icon: 'warning', title: 'ข้อมูลไม่ครบ', text: 'กรุณาใส่ข้อความหรือลิงก์', background: '#0a1128', color: '#fff', confirmButtonColor: '#00f3ff' });
         return false;
       }
       return true;
@@ -688,7 +694,7 @@ function generateQR() {
 
   const text = buildQRData();
   if (!text) {
-    alert("ไม่สามารถสร้างข้อมูล QR ได้ กรุณาตรวจสอบข้อมูลอีกครั้ง");
+    Swal.fire({ icon: 'error', title: 'ข้อผิดพลาด', text: 'ไม่สามารถสร้างข้อมูล QR ได้ กรุณาตรวจสอบข้อมูลอีกครั้ง', background: '#0a1128', color: '#fff', confirmButtonColor: '#bc13fe' });
     return;
   }
 
@@ -711,6 +717,19 @@ function generateQR() {
     // 3. สร้าง QR Code จริง
     qrCode = new QRCodeStyling(finalOptions);
     qrCode.append(document.getElementById("qr-code"));
+    
+    // แจ้งเตือนสร้างสำเร็จ
+    Swal.fire({
+      toast: true,
+      position: 'top-end',
+      icon: 'success',
+      title: 'สร้าง QR Code สำเร็จ!',
+      showConfirmButton: false,
+      timer: 2000,
+      background: '#0a1128',
+      color: '#00f3ff',
+      iconColor: '#00f3ff'
+    });
   };
 
   if (logoFile) {
@@ -725,9 +744,22 @@ function generateQR() {
  */
 function downloadQR() {
   if (!qrCode) {
-    alert("กรุณาสร้าง QR Code ก่อนดาวน์โหลด");
+    Swal.fire({ icon: 'warning', title: 'ยังไม่มี QR Code', text: 'กรุณาสร้าง QR Code ก่อนดาวน์โหลด', background: '#0a1128', color: '#fff', confirmButtonColor: '#00f3ff' });
     return;
   }
   const filename = document.getElementById("filename").value.trim() || "my-qr";
   qrCode.download({ name: filename, extension: "png" });
+  
+  // แจ้งเตือนดาวน์โหลด
+  Swal.fire({
+    toast: true,
+    position: 'top-end',
+    icon: 'success',
+    title: 'ดาวน์โหลดสำเร็จ',
+    showConfirmButton: false,
+    timer: 2000,
+    background: '#0a1128',
+    color: '#bc13fe',
+    iconColor: '#bc13fe'
+  });
 }

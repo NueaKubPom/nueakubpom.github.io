@@ -5,229 +5,297 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>NueaKubPom Admin</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  
+  <!-- AOS CSS -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <!-- SweetAlert2 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
+  
+  <link rel="icon" href="NKP-NT Studio Logo.png" type="image/png">
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- TailwindCSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
+      darkMode: 'class',
       theme: {
         extend: {
           fontFamily: {
             kanit: ['Kanit', 'sans-serif'],
           },
+          colors: {
+            neon: {
+              cyan: '#00f3ff',
+              purple: '#bc13fe',
+              blue: '#0b1b3d',
+              pink: '#ff0055',
+            }
+          },
+          backgroundImage: {
+            'cyber-grid': `
+              linear-gradient(rgba(0, 243, 255, 0.05) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(0, 243, 255, 0.05) 1px, transparent 1px)
+            `,
+            'cyber-gradient': 'linear-gradient(135deg, #050b14, #0a1128 50%, #03060c)',
+          },
+          boxShadow: {
+            'neon-cyan': '0 0 10px rgba(0, 243, 255, 0.3), inset 0 0 15px rgba(0, 243, 255, 0.1)',
+            'neon-purple': '0 0 10px rgba(188, 19, 254, 0.3), inset 0 0 15px rgba(188, 19, 254, 0.1)',
+            'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.37)',
+          },
+          animation: {
+            'float': 'float 6s ease-in-out infinite',
+            'drift-1': 'drift 15s ease-in-out infinite',
+            'drift-2': 'drift 18s ease-in-out infinite reverse',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-10px)' },
+            },
+            drift: {
+              '0%, 100%': { transform: 'translate3d(0,0,0) scale(1)' },
+              '50%': { transform: 'translate3d(24px,-18px,0) scale(1.06)' },
+            }
+          }
         },
       },
     };
   </script>
-  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
-  <link rel="icon" href="NKP-NT Studio Logo.png" type="image/png">
-  <link rel="stylesheet" href="style.css" />
 </head>
 
-<body class="font-kanit">
-  <div class="page-shell">
-    <div class="ambient ambient-a"></div>
-    <div class="ambient ambient-b"></div>
-    <div class="ambient-grid"></div>
+<body class="font-kanit bg-cyber-gradient text-slate-100 min-h-screen relative overflow-x-hidden selection:bg-neon-cyan selection:text-black">
+  <!-- Background Elements -->
+  <div class="fixed inset-0 z-[-4] bg-cyber-grid bg-[length:42px_42px] opacity-40 [mask-image:radial-gradient(circle_at_center,black_30%,transparent_80%)]"></div>
+  <div class="fixed top-[5%] -left-[5%] w-[min(28rem,50vw)] h-[min(28rem,50vw)] rounded-full bg-neon-cyan/10 blur-[80px] animate-drift-1 z-[-3]"></div>
+  <div class="fixed bottom-[3%] -right-[8%] w-[min(30rem,52vw)] h-[min(30rem,52vw)] rounded-full bg-neon-purple/10 blur-[80px] animate-drift-2 z-[-3]"></div>
 
-    <main class="mx-auto flex min-h-screen w-full max-w-7xl items-center px-4 py-8 sm:px-6 lg:px-8">
-      <section class="glass-stage grid w-full overflow-hidden rounded-[32px] border border-white/10 bg-white/5 shadow-[0_24px_80px_rgba(0,0,0,0.45)] backdrop-blur-2xl xl:grid-cols-[0.95fr_1.05fr]">
-        <div class="relative flex flex-col gap-8 border-b border-white/10 px-6 py-8 sm:px-8 lg:border-b-0 lg:border-r lg:px-10 lg:py-10">
-          <div class="absolute left-10 top-10 h-36 w-36 rounded-full bg-indigo-400/15 blur-3xl"></div>
-          <div class="absolute bottom-0 right-10 h-28 w-28 rounded-full bg-cyan-300/10 blur-3xl"></div>
-
-          <div class="relative z-10 flex items-start justify-between gap-4">
-            <div class="space-y-4">
-              <a href="index.html" class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-white/70 backdrop-blur-xl transition hover:border-white/20 hover:text-white">
-                <i class="fa-solid fa-arrow-left"></i>
-                <span>กลับหน้าหลัก</span>
-              </a>
-
-              <div class="space-y-3">
-                <p class="text-sm uppercase tracking-[0.24em] text-white/40">Control Center</p>
-                <h1 class="m-0 text-4xl font-semibold text-white sm:text-5xl">จัดการลิงก์</h1>
-                <p class="max-w-xl text-base leading-8 text-white/70">
-                  ปรับแต่งรายการลิงก์, icon, และปลายทางได้จากหน้าเดียว
-                  แล้วคัดลอก JSON ที่พร้อมนำไปใช้ต่อได้ทันที
-                </p>
-              </div>
-            </div>
-
-            <div class="logo-orb shrink-0">
-              <img src="NKP-NT Studio Logo.png" alt="NKP-NT Studio Logo" class="site-logo-img">
-            </div>
-          </div>
-
-          <div class="relative z-10 grid gap-4 sm:grid-cols-3">
-            <div class="stat-chip">
-              <i class="fa-solid fa-icons"></i>
-              <span>Font Awesome</span>
-            </div>
-            <div class="stat-chip">
-              <i class="fa-solid fa-pen-ruler"></i>
-              <span>Glass workflow</span>
-            </div>
-            <div class="stat-chip">
-              <i class="fa-solid fa-code"></i>
-              <span>JSON export</span>
-            </div>
-          </div>
-
-          <div class="relative z-10 rounded-[28px] border border-white/10 bg-black/10 p-5 backdrop-blur-xl">
-            <div class="mb-4 flex items-center justify-between gap-4">
-              <div>
-                <p class="m-0 text-sm uppercase tracking-[0.22em] text-white/35">Live List</p>
-                <h2 class="m-0 mt-1 text-2xl font-semibold text-white">ลิงก์ปัจจุบัน</h2>
-              </div>
-              <div class="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-white/10 text-white/75">
-                <i class="fa-solid fa-list-check"></i>
-              </div>
-            </div>
-            <div id="links-list" class="admin-links-list"></div>
-          </div>
+  <main class="mx-auto flex min-h-screen w-full max-w-7xl items-center justify-center p-4 sm:p-6 relative z-10">
+    
+    <!-- Login Section -->
+    <section id="login-section" data-aos="zoom-in" class="w-full max-w-md overflow-hidden rounded-[32px] border border-white/10 bg-black/40 shadow-[0_0_15px_rgba(188,19,254,0.1)] backdrop-blur-xl p-8 relative">
+      <div class="absolute -left-10 top-10 h-32 w-32 rounded-full bg-neon-purple/20 blur-3xl pointer-events-none"></div>
+      <div class="absolute bottom-10 -right-10 h-32 w-32 rounded-full bg-neon-cyan/20 blur-3xl pointer-events-none"></div>
+      
+      <div class="relative z-10 text-center space-y-6">
+        <div class="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-white/10 to-white/5 border border-white/10 shadow-glass backdrop-blur-xl">
+          <i class="fa-solid fa-lock text-3xl text-neon-purple"></i>
         </div>
-
-        <div class="relative px-6 py-8 sm:px-8 lg:px-10 lg:py-10">
-          <div class="panel-shine"></div>
-          <div class="relative z-10 space-y-6">
-            <section class="rounded-[28px] border border-white/10 bg-black/10 p-5 backdrop-blur-xl">
-              <div class="mb-5 flex items-center justify-between gap-4">
-                <div>
-                  <p class="m-0 text-sm uppercase tracking-[0.22em] text-white/35">Create</p>
-                  <h2 class="m-0 mt-1 text-2xl font-semibold text-white">เพิ่มลิงก์ใหม่</h2>
-                </div>
-                <div class="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-white/10 text-white/75">
-                  <i class="fa-solid fa-plus"></i>
-                </div>
-              </div>
-
-              <form id="add-form" class="space-y-4">
-                <div class="grid gap-4 sm:grid-cols-2">
-                  <div>
-                    <label for="link-id" class="admin-label">ID</label>
-                    <input type="text" id="link-id" placeholder="instagram" required />
-                  </div>
-                  <div>
-                    <label for="link-target" class="admin-label">Target</label>
-                    <select id="link-target">
-                      <option value="_self">เปิดหน้าเดิม (_self)</option>
-                      <option value="_blank">เปิดแท็บใหม่ (_blank)</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div>
-                  <label for="link-icon" class="admin-label">Font Awesome Icon Class</label>
-                  <input type="text" id="link-icon" placeholder="fa-brands fa-instagram" required />
-                  <p class="admin-help">ใช้รูปแบบ class เช่น <code>fa-solid fa-qrcode</code> หรือ <code>fa-brands fa-youtube</code></p>
-                </div>
-
-                <div>
-                  <label for="link-text" class="admin-label">ชื่อปุ่ม</label>
-                  <input type="text" id="link-text" placeholder="Instagram" required />
-                </div>
-
-                <div>
-                  <label for="link-url" class="admin-label">URL</label>
-                  <input type="url" id="link-url" placeholder="https://..." required />
-                </div>
-
-                <div class="admin-preview-card">
-                  <div class="admin-preview-head">
-                    <span>Preview</span>
-                    <span id="preview-target" class="admin-preview-pill">_blank</span>
-                  </div>
-                  <div class="button-link admin-preview-link">
-                    <span class="link-icon-wrap"><i id="preview-icon" class="fa-solid fa-icons"></i></span>
-                    <span class="link-copy">
-                      <span id="preview-text" class="link-label">ชื่อปุ่มของคุณ</span>
-                      <span id="preview-meta" class="link-meta">Open destination</span>
-                    </span>
-                    <span class="link-arrow"><i class="fa-solid fa-arrow-up-right-from-square"></i></span>
-                  </div>
-                </div>
-
-                <button type="submit" class="admin-action-button">
-                  <i class="fa-solid fa-circle-plus"></i>
-                  <span>เพิ่มลิงก์</span>
-                </button>
-              </form>
-            </section>
-
-            <section class="rounded-[28px] border border-white/10 bg-black/10 p-5 backdrop-blur-xl">
-              <div class="mb-5 flex items-center justify-between gap-4">
-                <div>
-                  <p class="m-0 text-sm uppercase tracking-[0.22em] text-white/35">Export</p>
-                  <h2 class="m-0 mt-1 text-2xl font-semibold text-white">สร้าง JSON</h2>
-                </div>
-                <button id="generate-button" class="admin-secondary-button" type="button">
-                  <i class="fa-solid fa-file-code"></i>
-                  <span>Generate</span>
-                </button>
-              </div>
-
-              <div id="save-area" class="hidden space-y-3">
-                <p class="m-0 text-sm leading-7 text-white/65">
-                  คัดลอกข้อมูลด้านล่างแล้วนำไปแทนที่ในไฟล์ <code>links.json</code>
-                </p>
-                <textarea id="json-output" readonly class="admin-json-output"></textarea>
-              </div>
-            </section>
-          </div>
-        </div>
-      </section>
-    </main>
-  </div>
-
-  <div id="edit-modal" class="modal-overlay">
-    <div class="modal-content">
-      <div class="mb-5 flex items-center justify-between gap-4">
         <div>
-          <p class="m-0 text-sm uppercase tracking-[0.22em] text-white/35">Edit Item</p>
-          <h2 class="m-0 mt-1 text-2xl font-semibold text-white">แก้ไขลิงก์</h2>
+          <h2 class="text-3xl font-bold text-white mb-2 text-shadow-glow-purple">Admin Login</h2>
+          <p class="text-sm text-slate-400">กรุณาใส่รหัสผ่านเพื่อเข้าสู่ระบบจัดการลิงก์</p>
         </div>
-        <button type="button" id="close-edit-top" class="admin-icon-button" aria-label="Close edit dialog">
+        <form id="login-form" class="space-y-4">
+          <input type="password" id="admin-password" placeholder="Password..." required class="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-slate-100 placeholder-slate-500 focus:outline-none focus:border-neon-purple focus:ring-1 focus:ring-neon-purple transition-colors text-center tracking-widest" />
+          <button type="submit" class="w-full flex items-center justify-center gap-2 py-3 px-6 rounded-xl bg-neon-purple/10 border border-neon-purple/30 text-neon-purple font-semibold hover:bg-neon-purple/20 hover:shadow-neon-purple transition-all duration-300">
+            <span>เข้าสู่ระบบ</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <!-- Admin Content (Hidden by default) -->
+    <section id="admin-content" data-aos="fade-up" data-aos-duration="1000" class="hidden w-full overflow-hidden rounded-[32px] border border-white/10 bg-black/40 shadow-[0_0_15px_rgba(0,243,255,0.1)] backdrop-blur-xl lg:grid lg:grid-cols-[1fr_1.1fr] relative">
+      <!-- Glow Borders inner -->
+      <div class="absolute inset-0 border border-white/5 rounded-[32px] pointer-events-none"></div>
+
+      <!-- Left Column -->
+      <div class="relative flex flex-col gap-8 border-b border-white/10 px-6 py-8 sm:px-10 lg:border-b-0 lg:border-r lg:px-12 lg:py-12">
+        <!-- Ambient spots inside panel -->
+        <div class="absolute left-10 top-10 h-36 w-36 rounded-full bg-neon-cyan/15 blur-3xl pointer-events-none"></div>
+        <div class="absolute bottom-0 right-10 h-28 w-28 rounded-full bg-neon-purple/15 blur-3xl pointer-events-none"></div>
+
+        <div class="relative z-10 flex items-start justify-between gap-4">
+          <div class="space-y-6">
+            <a href="index.html" class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-300 backdrop-blur-md transition-all hover:border-neon-cyan/50 hover:bg-neon-cyan/10 hover:text-neon-cyan hover:shadow-neon-cyan group">
+              <i class="fa-solid fa-arrow-left group-hover:-translate-x-1 transition-transform"></i>
+              <span>กลับหน้าหลัก</span>
+            </a>
+
+            <div class="space-y-3">
+              <h1 class="m-0 text-4xl sm:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-200 to-neon-cyan drop-shadow-[0_0_20px_rgba(0,243,255,0.2)]" data-aos="fade-right" data-aos-delay="300">จัดการลิงก์</h1>
+            </div>
+          </div>
+
+          <div class="relative inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-br from-white/10 to-white/5 border border-white/10 shadow-glass backdrop-blur-xl shrink-0 group" data-aos="zoom-in" data-aos-delay="500">
+            <div class="absolute inset-1 rounded-xl border border-white/5 group-hover:border-neon-cyan/30 transition-colors duration-500"></div>
+            <img src="NKP-NT Studio Logo.png" alt="NKP-NT Studio Logo" class="w-[70%] h-auto object-contain drop-shadow-[0_0_15px_rgba(0,243,255,0.4)] animate-float">
+          </div>
+        </div>
+
+        <!-- Live List Card -->
+        <div class="relative z-10 rounded-[28px] border border-white/10 bg-black/30 p-5 sm:p-6 backdrop-blur-xl shadow-glass flex-1 flex flex-col" data-aos="fade-up" data-aos-delay="700">
+          <div class="mb-5 flex items-center justify-between gap-4">
+            <div>
+              <p class="m-0 text-xs font-semibold uppercase tracking-[0.2em] text-neon-purple/70">Live List</p>
+              <h2 class="m-0 mt-1 text-2xl font-bold text-white text-shadow-glow-cyan">ลิงก์ปัจจุบัน</h2>
+            </div>
+            <div class="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-neon-cyan/20 bg-neon-cyan/10 text-neon-cyan shadow-neon-cyan backdrop-blur-md">
+              <i class="fa-solid fa-list-check"></i>
+            </div>
+          </div>
+          <div id="links-list" class="flex flex-col gap-3 flex-1 overflow-y-auto pr-2 custom-scrollbar">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column -->
+      <div class="relative px-6 py-8 sm:px-10 lg:px-12 lg:py-12 bg-black/20">
+        <div class="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent pointer-events-none"></div>
+        <div class="relative z-10 space-y-6">
+          
+          <!-- Create Form Card -->
+          <section class="rounded-[28px] border border-white/10 bg-black/30 p-5 sm:p-6 backdrop-blur-xl shadow-glass" data-aos="fade-left" data-aos-delay="300">
+            <div class="mb-6 flex items-center justify-between gap-4">
+              <div>
+                <p class="m-0 text-xs font-semibold uppercase tracking-[0.2em] text-neon-cyan/70">Create</p>
+                <h2 class="m-0 mt-1 text-2xl font-bold text-white">เพิ่มลิงก์ใหม่</h2>
+              </div>
+              <div class="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-neon-cyan/20 bg-neon-cyan/10 text-neon-cyan shadow-neon-cyan backdrop-blur-md">
+                <i class="fa-solid fa-plus"></i>
+              </div>
+            </div>
+
+            <form id="add-form" class="space-y-5">
+              <div class="grid gap-4 sm:grid-cols-2">
+                <div>
+                  <label for="link-id" class="block text-sm text-slate-300 mb-2">ID</label>
+                  <input type="text" id="link-id" placeholder="instagram" required class="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-slate-100 placeholder-slate-500 focus:outline-none focus:border-neon-cyan focus:ring-1 focus:ring-neon-cyan transition-colors" />
+                </div>
+                <div>
+                  <label for="link-target" class="block text-sm text-slate-300 mb-2">Target</label>
+                  <select id="link-target" class="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-slate-100 focus:outline-none focus:border-neon-cyan focus:ring-1 focus:ring-neon-cyan transition-colors appearance-none">
+                    <option value="_self" class="bg-slate-900">เปิดหน้าเดิม (_self)</option>
+                    <option value="_blank" class="bg-slate-900" selected>เปิดแท็บใหม่ (_blank)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label for="link-icon" class="block text-sm text-slate-300 mb-2">Font Awesome Icon Class</label>
+                <input type="text" id="link-icon" placeholder="fa-brands fa-instagram" required class="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-slate-100 placeholder-slate-500 focus:outline-none focus:border-neon-cyan focus:ring-1 focus:ring-neon-cyan transition-colors" />
+                <p class="mt-2 text-xs text-slate-500">ใช้รูปแบบ class เช่น <code class="text-neon-purple bg-neon-purple/10 px-1 py-0.5 rounded">fa-solid fa-qrcode</code></p>
+              </div>
+
+              <div>
+                <label for="link-text" class="block text-sm text-slate-300 mb-2">ชื่อปุ่ม</label>
+                <input type="text" id="link-text" placeholder="Instagram" required class="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-slate-100 placeholder-slate-500 focus:outline-none focus:border-neon-cyan focus:ring-1 focus:ring-neon-cyan transition-colors" />
+              </div>
+
+              <div>
+                <label for="link-url" class="block text-sm text-slate-300 mb-2">URL</label>
+                <input type="url" id="link-url" placeholder="https://..." required class="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-slate-100 placeholder-slate-500 focus:outline-none focus:border-neon-cyan focus:ring-1 focus:ring-neon-cyan transition-colors" />
+              </div>
+
+              <!-- Preview Area -->
+              <div class="rounded-[20px] border border-white/5 bg-white/5 p-4 sm:p-5 backdrop-blur-md">
+                <div class="flex items-center justify-between mb-4">
+                  <span class="text-sm font-semibold text-slate-400">Preview</span>
+                  <span id="preview-target" class="text-xs px-2 py-1 rounded-md bg-white/10 border border-white/10 text-slate-300">_blank</span>
+                </div>
+                <!-- Mock Link Button -->
+                <div class="group relative flex items-center gap-4 p-4 rounded-xl bg-white/5 border border-white/10 transition-all overflow-hidden opacity-80 pointer-events-none">
+                  <span class="relative z-10 flex shrink-0 h-12 w-12 items-center justify-center rounded-xl bg-white/10 border border-white/10 text-slate-300 shadow-glass">
+                    <i id="preview-icon" class="fa-solid fa-icons text-xl"></i>
+                  </span>
+                  <span class="relative z-10 flex flex-col flex-1 min-w-0">
+                    <span id="preview-text" class="text-base font-semibold text-slate-100 truncate">ชื่อปุ่มของคุณ</span>
+                    <span id="preview-meta" class="text-xs text-slate-400 truncate mt-0.5">new-link • preview</span>
+                  </span>
+                  <span class="relative z-10 flex shrink-0 items-center justify-center text-slate-500">
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                  </span>
+                </div>
+              </div>
+
+              <button type="submit" class="w-full flex items-center justify-center gap-2 py-3.5 px-6 rounded-xl bg-gradient-to-r from-neon-cyan/20 to-neon-purple/20 border border-neon-cyan/30 text-neon-cyan font-semibold hover:bg-neon-cyan/30 hover:shadow-neon-cyan transition-all duration-300">
+                <i class="fa-solid fa-circle-plus"></i>
+                <span>เพิ่มลิงก์เข้าสู่ระบบ</span>
+              </button>
+            </form>
+          </section>
+
+          <!-- Save to Google Sheets Card -->
+          <section class="rounded-[28px] border border-white/10 bg-black/30 p-5 sm:p-6 backdrop-blur-xl shadow-glass" data-aos="fade-left" data-aos-delay="400">
+            <div class="mb-5 flex flex-wrap items-center justify-between gap-4">
+              <div>
+                <p class="m-0 text-xs font-semibold uppercase tracking-[0.2em] text-neon-purple/70">Sync</p>
+                <h2 class="m-0 mt-1 text-2xl font-bold text-white">บันทึกข้อมูล</h2>
+              </div>
+              <div class="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-neon-purple/20 bg-neon-purple/10 text-neon-purple shadow-neon-purple backdrop-blur-md">
+                <i class="fa-solid fa-cloud-arrow-up"></i>
+              </div>
+            </div>
+            <p class="text-sm text-slate-400 mb-4">
+              กดบันทึกเพื่ออัปเดตข้อมูลลิงก์ทั้งหมดไปยัง Google Sheets ทันที
+            </p>
+            <button id="save-to-sheets" type="button" class="w-full flex items-center justify-center gap-2 py-3.5 px-6 rounded-xl bg-gradient-to-r from-neon-purple/20 to-neon-cyan/20 border border-neon-purple/30 text-neon-purple font-semibold hover:bg-neon-purple/30 hover:shadow-neon-purple transition-all duration-300">
+              <i class="fa-solid fa-cloud-arrow-up"></i>
+              <span>บันทึกไปยัง Google Sheets</span>
+            </button>
+          </section>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Edit Modal Overlay -->
+  <div id="edit-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 bg-black/80 backdrop-blur-md opacity-0 transition-opacity duration-300">
+    <div class="relative w-full max-w-lg rounded-[32px] border border-neon-cyan/30 bg-slate-900/90 p-6 sm:p-8 shadow-neon-cyan transform scale-95 transition-transform duration-300" id="edit-modal-content">
+      <div class="mb-6 flex items-center justify-between gap-4">
+        <div>
+          <p class="m-0 text-xs font-semibold uppercase tracking-[0.2em] text-neon-purple/70">Edit Node</p>
+          <h2 class="m-0 mt-1 text-2xl font-bold text-white text-shadow-glow-cyan">แก้ไขลิงก์</h2>
+        </div>
+        <button type="button" id="close-edit-top" class="h-10 w-10 flex items-center justify-center rounded-full bg-white/5 border border-white/10 text-slate-400 hover:text-white hover:bg-white/10 transition-colors">
           <i class="fa-solid fa-xmark"></i>
         </button>
       </div>
 
-      <form id="edit-form" class="space-y-4">
+      <form id="edit-form" class="space-y-5">
         <input type="hidden" id="edit-index" />
 
         <div class="grid gap-4 sm:grid-cols-2">
           <div>
-            <label for="edit-id" class="admin-label">ID</label>
-            <input type="text" id="edit-id" required />
+            <label for="edit-id" class="block text-sm text-slate-300 mb-2">ID</label>
+            <input type="text" id="edit-id" required class="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-slate-100 placeholder-slate-500 focus:outline-none focus:border-neon-cyan transition-colors" />
           </div>
           <div>
-            <label for="edit-target" class="admin-label">Target</label>
-            <select id="edit-target">
-              <option value="_self">เปิดหน้าเดิม (_self)</option>
-              <option value="_blank">เปิดแท็บใหม่ (_blank)</option>
+            <label for="edit-target" class="block text-sm text-slate-300 mb-2">Target</label>
+            <select id="edit-target" class="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-slate-100 focus:outline-none focus:border-neon-cyan transition-colors appearance-none">
+              <option value="_self" class="bg-slate-900">เปิดหน้าเดิม (_self)</option>
+              <option value="_blank" class="bg-slate-900">เปิดแท็บใหม่ (_blank)</option>
             </select>
           </div>
         </div>
 
         <div>
-          <label for="edit-icon" class="admin-label">Font Awesome Icon Class</label>
-          <input type="text" id="edit-icon" required />
+          <label for="edit-icon" class="block text-sm text-slate-300 mb-2">Font Awesome Icon Class</label>
+          <input type="text" id="edit-icon" required class="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-slate-100 focus:outline-none focus:border-neon-cyan transition-colors" />
         </div>
 
         <div>
-          <label for="edit-text" class="admin-label">ชื่อปุ่ม</label>
-          <input type="text" id="edit-text" required />
+          <label for="edit-text" class="block text-sm text-slate-300 mb-2">ชื่อปุ่ม</label>
+          <input type="text" id="edit-text" required class="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-slate-100 focus:outline-none focus:border-neon-cyan transition-colors" />
         </div>
 
         <div>
-          <label for="edit-url" class="admin-label">URL</label>
-          <input type="text" id="edit-url" placeholder="https://..." required />
+          <label for="edit-url" class="block text-sm text-slate-300 mb-2">URL</label>
+          <input type="text" id="edit-url" required class="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-slate-100 focus:outline-none focus:border-neon-cyan transition-colors" />
         </div>
 
-        <div class="flex flex-col gap-3 pt-2 sm:flex-row">
-          <button type="submit" class="admin-action-button sm:flex-1">
+        <div class="flex flex-col sm:flex-row gap-3 pt-4">
+          <button type="submit" class="flex-1 flex items-center justify-center gap-2 py-3 px-6 rounded-xl bg-neon-cyan/20 border border-neon-cyan/40 text-neon-cyan font-semibold hover:bg-neon-cyan/30 hover:shadow-neon-cyan transition-all">
             <i class="fa-solid fa-floppy-disk"></i>
-            <span>บันทึกการแก้ไข</span>
+            <span>บันทึกข้อมูล</span>
           </button>
-          <button type="button" id="cancel-edit" class="admin-secondary-button sm:flex-1">
+          <button type="button" id="cancel-edit" class="flex-1 flex items-center justify-center gap-2 py-3 px-6 rounded-xl bg-white/5 border border-white/10 text-slate-300 hover:bg-white/10 hover:text-white transition-all">
             <i class="fa-solid fa-ban"></i>
             <span>ยกเลิก</span>
           </button>
@@ -236,6 +304,26 @@
     </div>
   </div>
 
+  <!-- Additional CSS for custom scrollbars missing in Tailwind default -->
+  <style>
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: rgba(0,0,0,0.2);
+      border-radius: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: rgba(0, 243, 255, 0.3);
+      border-radius: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: rgba(188, 19, 254, 0.5);
+    }
+  </style>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
   <script src="admin.js"></script>
 </body>
 
