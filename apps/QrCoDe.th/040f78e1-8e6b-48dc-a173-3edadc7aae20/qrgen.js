@@ -127,12 +127,6 @@ const PRESETS = {
 
 // (A) ส่วนจัดการ UI และ Live Preview
 document.addEventListener("DOMContentLoaded", function () {
-  // Initialize AOS
-  AOS.init({
-    once: true,
-    offset: 50,
-  });
-
   // --- 0. Branding: Dynamic Year ---
   const yearSpan = document.getElementById("current-year");
   if (yearSpan) yearSpan.textContent = new Date().getFullYear();
@@ -289,17 +283,6 @@ document.addEventListener("DOMContentLoaded", function () {
         previewQrCode.update({});
       }
     }, 150);
-  });
-
-  // Re-render หลัง AOS animations เสร็จสมบูรณ์
-  document.addEventListener('aos:in', function () {
-    setTimeout(function () {
-      if (qrCode) {
-        qrCode.update({});
-      } else if (previewQrCode) {
-        previewQrCode.update({});
-      }
-    }, 100);
   });
 
   // --- 4. เพิ่ม Event Listeners ให้ทุกปุ่มปรับแต่ง ---
