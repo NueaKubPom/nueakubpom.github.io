@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="th" style="color-scheme: dark;">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>QR Generator X NKPNT</title>
+  <meta name="description" content="สร้าง QR Code สวยๆ ฟรี พร้อมปรับแต่งสี รูปแบบ และโลโก้ได้ - QR Generator by NKPNT Studio" />
   
   <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
@@ -32,12 +33,58 @@
     .custom-scrollbar::-webkit-scrollbar-thumb:hover {
       background: rgba(188, 19, 254, 0.5);
     }
-    /* Fix QR Code Preview Size */
-    #qr-code > * {
+
+    /* Fix QR Code Preview Size — works with canvas and SVG */
+    #qr-code {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 200px;
+    }
+    #qr-code canvas,
+    #qr-code svg {
+      display: block;
       width: 100% !important;
-      max-width: 400px !important;
+      max-width: 380px !important;
       height: auto !important;
-      aspect-ratio: 1 / 1;
+    }
+
+    /* Custom Select Arrow */
+    select.appearance-none,
+    select[class*="appearance-none"] {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      background-size: 16px;
+      padding-right: 40px !important;
+    }
+
+    /* Dark theme for native date/time inputs */
+    input[type="datetime-local"],
+    input[type="date"],
+    input[type="time"] {
+      color-scheme: dark;
+    }
+    input[type="datetime-local"]::-webkit-calendar-picker-indicator,
+    input[type="date"]::-webkit-calendar-picker-indicator,
+    input[type="time"]::-webkit-calendar-picker-indicator {
+      filter: invert(0.7) sepia(1) saturate(3) hue-rotate(140deg);
+      cursor: pointer;
+    }
+
+    /* Global scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #050b14;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #00f3ff;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #bc13fe;
     }
   </style>
 
@@ -139,7 +186,7 @@
           </div>
 
           <!-- Preview Section -->
-          <section class="rounded-[28px] border border-white/10 bg-black/30 p-5 backdrop-blur-xl shadow-glass mt-auto" data-aos="fade-up" data-aos-delay="700">
+          <section class="rounded-[28px] border border-white/10 bg-black/30 p-5 backdrop-blur-xl shadow-glass mt-auto">
             <div class="mb-5 flex items-center justify-between gap-4">
               <div>
                 <p class="text-xs font-semibold uppercase tracking-[0.2em] text-neon-cyan/70">Preview</p>
@@ -150,7 +197,7 @@
               </div>
             </div>
 
-            <div class="relative flex min-h-[340px] items-center justify-center overflow-hidden rounded-[24px] border border-white/10 bg-black/40 p-4 sm:min-h-[420px]">
+            <div class="relative flex min-h-[260px] items-center justify-center overflow-hidden rounded-[24px] border border-white/10 bg-black/40 p-4 sm:min-h-[340px] lg:min-h-[380px]">
               <div class="absolute inset-0 opacity-40 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(circle_at_center,black_35%,transparent_85%)]"></div>
               <div id="qr-code" class="relative z-10 flex w-full justify-center drop-shadow-[0_0_20px_rgba(0,243,255,0.15)]"></div>
             </div>

@@ -1,32 +1,43 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-@layer base {
-  html {
-    scroll-behavior: smooth;
-  }
-  
-  body {
-    @apply min-h-screen m-0 overflow-x-hidden;
-  }
+/* ===== Base Styles ===== */
+html {
+  scroll-behavior: smooth;
+  color-scheme: dark;
 }
 
-@layer utilities {
-  .text-shadow-glow-cyan {
-    text-shadow: 0 0 10px rgba(0, 243, 255, 0.5), 0 0 20px rgba(0, 243, 255, 0.3);
-  }
-  
-  .text-shadow-glow-purple {
-    text-shadow: 0 0 10px rgba(188, 19, 254, 0.5), 0 0 20px rgba(188, 19, 254, 0.3);
-  }
-  
-  .glass-panel {
-    @apply bg-black/40 backdrop-blur-xl border border-white/10 shadow-[0_0_15px_rgba(0,243,255,0.1)];
-  }
+body {
+  min-height: 100vh;
+  margin: 0;
+  overflow-x: hidden;
 }
 
-/* Custom Webkit Scrollbar for Cyber feel */
+/* ===== Custom Utilities ===== */
+.text-shadow-glow-cyan {
+  text-shadow: 0 0 10px rgba(0, 243, 255, 0.5), 0 0 20px rgba(0, 243, 255, 0.3);
+}
+
+.text-shadow-glow-purple {
+  text-shadow: 0 0 10px rgba(188, 19, 254, 0.5), 0 0 20px rgba(188, 19, 254, 0.3);
+}
+
+.glass-panel {
+  background: rgba(0, 0, 0, 0.4);
+  -webkit-backdrop-filter: blur(24px);
+  backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 15px rgba(0, 243, 255, 0.1);
+}
+
+/* ===== Custom Select Arrow (Global) ===== */
+select.appearance-none,
+select[class*="appearance-none"] {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px;
+  padding-right: 40px !important;
+}
+
+/* ===== Custom Webkit Scrollbar for Cyber feel ===== */
 ::-webkit-scrollbar {
   width: 8px;
 }

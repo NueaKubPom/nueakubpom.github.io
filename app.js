@@ -1,9 +1,146 @@
+// =============================================
+// CHANGELOG CONFIG — แก้ไขตรงนี้เมื่อมีอัพเดทใหม่
+// =============================================
+const SITE_CHANGELOG = {
+  version: "1.1.0",
+  date: "24 มิ.ย. 2569",
+  sections: [
+    {
+      type: "fix",       // fix | feature | improve
+      title: "แก้ไขบั๊ก",
+      icon: "fa-solid fa-bug",
+      items: [
+        "แก้ไข QR Preview หายเมื่อเลื่อนหน้าจอ — ไม่ต้องปรับขนาดหน้าจอแล้ว",
+        "แก้ไข QR Code canvas/SVG แสดงผลผิดพลาด",
+        "แก้ไข Instagram URL ลิงก์ไปที่ผิด",
+        "แก้ไข Gradient options layout เสียเมื่อสลับธีม",
+      ]
+    },
+    {
+      type: "improve",
+      title: "ปรับปรุง UI/UX",
+      icon: "fa-solid fa-wand-magic-sparkles",
+      items: [
+        "เพิ่ม dropdown arrow icon ให้ทุก select menu",
+        "ปรับปรุง datetime-local input ให้เห็นชัดใน dark mode",
+        "ปรับ responsive layout สำหรับ QR Preview บนมือถือ",
+        "ปรับ CSS ให้ทำงานถูกต้องกับ Tailwind CDN",
+      ]
+    },
+    {
+      type: "feature",
+      title: "ฟีเจอร์ใหม่",
+      icon: "fa-solid fa-sparkles",
+      items: [
+        "เพิ่มระบบ Changelog แจ้งอัพเดทเมื่อมีเวอร์ชันใหม่",
+        "เพิ่ม Meta Description สำหรับ SEO",
+        "เพิ่ม color-scheme dark สำหรับ native elements",
+      ]
+    }
+  ]
+};
+
+// =============================================
+// CHANGELOG SYSTEM
+// =============================================
+function initChangelog() {
+  const overlay = document.getElementById("changelog-overlay");
+  if (!overlay) return;
+
+  const storageKey = "nkpnt_changelog_dismissed";
+  const dismissedVersion = localStorage.getItem(storageKey);
+
+  // ถ้า version ที่กดปิดไปแล้วตรงกับปัจจุบัน → ไม่แสดง
+  if (dismissedVersion === SITE_CHANGELOG.version) return;
+
+  // Render content
+  const versionText = document.getElementById("changelog-version-text");
+  const dateText = document.getElementById("changelog-date");
+  const contentEl = document.getElementById("changelog-content");
+
+  if (versionText) versionText.textContent = "v" + SITE_CHANGELOG.version;
+  if (dateText) dateText.textContent = SITE_CHANGELOG.date;
+
+  if (contentEl) {
+    const sectionColors = {
+      fix: { border: "border-rose-500/20", bg: "bg-rose-500/5", icon: "text-rose-400", badge: "bg-rose-500/15 text-rose-400 border-rose-500/30" },
+      feature: { border: "border-emerald-500/20", bg: "bg-emerald-500/5", icon: "text-emerald-400", badge: "bg-emerald-500/15 text-emerald-400 border-emerald-500/30" },
+      improve: { border: "border-amber-500/20", bg: "bg-amber-500/5", icon: "text-amber-400", badge: "bg-amber-500/15 text-amber-400 border-amber-500/30" },
+    };
+
+    contentEl.innerHTML = SITE_CHANGELOG.sections.map(function(section) {
+      const colors = sectionColors[section.type] || sectionColors.improve;
+      const itemsHtml = section.items.map(function(item) {
+        return '<li class="flex items-start gap-2.5 text-sm text-slate-300 leading-relaxed">' +
+          '<i class="fa-solid fa-chevron-right text-[10px] mt-1.5 shrink-0 ' + colors.icon + '"></i>' +
+          '<span>' + item + '</span>' +
+          '</li>';
+      }).join("");
+
+      return '<div class="rounded-[20px] border ' + colors.border + ' ' + colors.bg + ' p-4 backdrop-blur-md">' +
+        '<div class="flex items-center gap-2.5 mb-3">' +
+          '<span class="inline-flex items-center gap-1.5 rounded-lg border px-2.5 py-1 text-xs font-bold uppercase tracking-wide ' + colors.badge + '">' +
+            '<i class="' + section.icon + '"></i>' +
+            section.title +
+          '</span>' +
+        '</div>' +
+        '<ul class="space-y-2">' + itemsHtml + '</ul>' +
+      '</div>';
+    }).join("");
+  }
+
+  // แสดง modal ด้วย animation
+  setTimeout(function() {
+    overlay.style.display = "flex";
+    requestAnimationFrame(function() {
+      overlay.style.opacity = "1";
+      const modal = document.getElementById("changelog-modal");
+      if (modal) {
+        modal.style.transform = "scale(1) translateY(0)";
+      }
+    });
+  }, 1500); // delay เล็กน้อยให้หน้าเว็บโหลดก่อน
+
+  // ปุ่มปิด
+  function dismissChangelog() {
+    localStorage.setItem(storageKey, SITE_CHANGELOG.version);
+    overlay.style.opacity = "0";
+    const modal = document.getElementById("changelog-modal");
+    if (modal) {
+      modal.style.transform = "scale(0.92) translateY(20px)";
+    }
+    setTimeout(function() {
+      overlay.style.display = "none";
+    }, 400);
+  }
+
+  var closeBtn = document.getElementById("changelog-close-btn");
+  var dismissBtn = document.getElementById("changelog-dismiss-btn");
+  if (closeBtn) closeBtn.addEventListener("click", dismissChangelog);
+  if (dismissBtn) dismissBtn.addEventListener("click", dismissChangelog);
+
+  // กดพื้นหลังปิดด้วย
+  overlay.addEventListener("click", function(e) {
+    if (e.target === overlay) dismissChangelog();
+  });
+
+  // กด Escape ปิด
+  document.addEventListener("keydown", function(e) {
+    if (e.key === "Escape" && overlay.style.display === "flex") {
+      dismissChangelog();
+    }
+  });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   // Initialize AOS
   AOS.init({
     once: true,
     offset: 50,
   });
+
+  // Initialize Changelog modal
+  initChangelog();
 
   // ==========================================
   // ตั้งค่า URL ของ Google Apps Script ของคุณที่นี่

@@ -219,8 +219,13 @@ document.addEventListener("DOMContentLoaded", function () {
   const dotGradientOptions = document.getElementById("dotGradientOptions");
 
   dotColorType.addEventListener("change", function () {
-    dotGradientOptions.style.display =
-      this.value === "gradient" ? "block" : "none";
+    if (this.value === "gradient") {
+      dotGradientOptions.classList.remove("hidden");
+      dotGradientOptions.style.display = "block";
+    } else {
+      dotGradientOptions.classList.add("hidden");
+      dotGradientOptions.style.display = "";
+    }
   });
 
   const bgType = document.getElementById("bgType");
@@ -230,24 +235,72 @@ document.addEventListener("DOMContentLoaded", function () {
   bgType.addEventListener("change", function () {
     if (this.value === "gradient") {
       bgColorOptions.style.display = "block";
+      bgGradientOptions.classList.remove("hidden");
       bgGradientOptions.style.display = "block";
     } else if (this.value === "solid") {
       bgColorOptions.style.display = "block";
-      bgGradientOptions.style.display = "none";
+      bgGradientOptions.classList.add("hidden");
+      bgGradientOptions.style.display = "";
     } else {
       // Transparent
       bgColorOptions.style.display = "none";
-      bgGradientOptions.style.display = "none";
+      bgGradientOptions.classList.add("hidden");
+      bgGradientOptions.style.display = "";
     }
   });
 
   // --- 3. สร้าง Live Preview "test" QR Code ทันทีที่โหลดหน้า ---
+  const qrContainer = document.getElementById("qr-code");
   let initialOptions = buildStylingOptions();
   initialOptions.data = "test"; // บังคับข้อมูลเป็น "test"
   initialOptions.image = ""; // ไม่มีโลโก้ในพรีวิว
 
   previewQrCode = new QRCodeStyling(initialOptions);
-  previewQrCode.append(document.getElementById("qr-code"));
+  previewQrCode.append(qrContainer);
+
+  // --- 3.1 FIX: Re-render QR เมื่อ container กลับมามี dimension ---
+  // ใช้ IntersectionObserver ตรวจจับเมื่อ element กลับเข้ามาใน viewport
+  if ('IntersectionObserver' in window) {
+    const qrObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          // Re-render QR เมื่อ container กลับมามองเห็น
+          requestAnimationFrame(function () {
+            if (qrCode) {
+              qrCode.update({});
+            } else if (previewQrCode) {
+              previewQrCode.update({});
+            }
+          });
+        }
+      });
+    }, { threshold: 0.1 });
+    qrObserver.observe(qrContainer);
+  }
+
+  // Re-render เมื่อ resize (แก้ปัญหาผู้ใช้ต้องปรับขนาดถึงจะเห็น)
+  let resizeTimer;
+  window.addEventListener('resize', function () {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function () {
+      if (qrCode) {
+        qrCode.update({});
+      } else if (previewQrCode) {
+        previewQrCode.update({});
+      }
+    }, 150);
+  });
+
+  // Re-render หลัง AOS animations เสร็จสมบูรณ์
+  document.addEventListener('aos:in', function () {
+    setTimeout(function () {
+      if (qrCode) {
+        qrCode.update({});
+      } else if (previewQrCode) {
+        previewQrCode.update({});
+      }
+    }, 100);
+  });
 
   // --- 4. เพิ่ม Event Listeners ให้ทุกปุ่มปรับแต่ง ---
   // --- 5. Checkbox toggle สำหรับ typeNumber (auto/manual) ---
@@ -258,10 +311,12 @@ document.addEventListener("DOMContentLoaded", function () {
   customTypeNumberCheckbox.addEventListener("change", function () {
     if (this.checked) {
       autoTypeInfo.style.display = "none";
+      manualTypeNumber.classList.remove("hidden");
       manualTypeNumber.style.display = "block";
     } else {
       autoTypeInfo.style.display = "flex";
-      manualTypeNumber.style.display = "none";
+      manualTypeNumber.classList.add("hidden");
+      manualTypeNumber.style.display = "";
     }
     updatePreview();
   });
@@ -407,18 +462,29 @@ function applyPreset(name, triggerButton) {
     preset.bgGradientRotation;
 
   // Toggle gradient options visibility
-  document.getElementById("dotGradientOptions").style.display =
-    preset.dotColorType === "gradient" ? "block" : "none";
-
-  if (preset.bgType === "gradient") {
-    document.getElementById("bgColorOptions").style.display = "block";
-    document.getElementById("bgGradientOptions").style.display = "block";
-  } else if (preset.bgType === "solid") {
-    document.getElementById("bgColorOptions").style.display = "block";
-    document.getElementById("bgGradientOptions").style.display = "none";
+  const dotGradientEl = document.getElementById("dotGradientOptions");
+  if (preset.dotColorType === "gradient") {
+    dotGradientEl.classList.remove("hidden");
+    dotGradientEl.style.display = "block";
   } else {
-    document.getElementById("bgColorOptions").style.display = "none";
-    document.getElementById("bgGradientOptions").style.display = "none";
+    dotGradientEl.classList.add("hidden");
+    dotGradientEl.style.display = "";
+  }
+
+  const bgColorEl = document.getElementById("bgColorOptions");
+  const bgGradientEl = document.getElementById("bgGradientOptions");
+  if (preset.bgType === "gradient") {
+    bgColorEl.style.display = "block";
+    bgGradientEl.classList.remove("hidden");
+    bgGradientEl.style.display = "block";
+  } else if (preset.bgType === "solid") {
+    bgColorEl.style.display = "block";
+    bgGradientEl.classList.add("hidden");
+    bgGradientEl.style.display = "";
+  } else {
+    bgColorEl.style.display = "none";
+    bgGradientEl.classList.add("hidden");
+    bgGradientEl.style.display = "";
   }
 
   updatePreview();
@@ -484,17 +550,24 @@ function randomizeStyle() {
   document.getElementById("dotGradientRotation").value = randInt(0, 360);
 
   // Toggle gradient options visibility
-  document.getElementById("dotGradientOptions").style.display = useGradient
-    ? "block"
-    : "none";
+  const dotGradEl = document.getElementById("dotGradientOptions");
+  if (useGradient) {
+    dotGradEl.classList.remove("hidden");
+    dotGradEl.style.display = "block";
+  } else {
+    dotGradEl.classList.add("hidden");
+    dotGradEl.style.display = "";
+  }
 
   // Background — 80% solid white, 10% gradient, 10% dark
   const bgRoll = Math.random();
+  const bgGradEl = document.getElementById("bgGradientOptions");
   if (bgRoll < 0.6) {
     document.getElementById("bgType").value = "solid";
     document.getElementById("bgColor1").value = "#ffffff";
     document.getElementById("bgColorOptions").style.display = "block";
-    document.getElementById("bgGradientOptions").style.display = "none";
+    bgGradEl.classList.add("hidden");
+    bgGradEl.style.display = "";
   } else if (bgRoll < 0.8) {
     document.getElementById("bgType").value = "solid";
     // สีพื้นสว่าง
@@ -511,7 +584,8 @@ function randomizeStyle() {
     ];
     document.getElementById("bgColor1").value = randItem(lightBgs);
     document.getElementById("bgColorOptions").style.display = "block";
-    document.getElementById("bgGradientOptions").style.display = "none";
+    bgGradEl.classList.add("hidden");
+    bgGradEl.style.display = "";
   } else {
     document.getElementById("bgType").value = "gradient";
     document.getElementById("bgColor1").value = randColor();
@@ -519,7 +593,8 @@ function randomizeStyle() {
     document.getElementById("bgGradientType").value = randItem(gradientTypes);
     document.getElementById("bgGradientRotation").value = randInt(0, 360);
     document.getElementById("bgColorOptions").style.display = "block";
-    document.getElementById("bgGradientOptions").style.display = "block";
+    bgGradEl.classList.remove("hidden");
+    bgGradEl.style.display = "block";
   }
 
   updatePreview();
