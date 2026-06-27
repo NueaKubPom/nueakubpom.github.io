@@ -412,12 +412,16 @@ function buildStylingOptions() {
 }
 
 /**
- * (C) ฟังก์ชันอัปเดต "test" QR Code (Live Preview)
+ * (C) ฟังก์ชันอัปเดต "test" QR Code (Live Preview) - Optimized (Debounced)
  */
+let previewUpdateTimer;
 function updatePreview() {
   if (!previewQrCode) return;
-  let updatedOptions = buildStylingOptions();
-  previewQrCode.update(updatedOptions);
+  clearTimeout(previewUpdateTimer);
+  previewUpdateTimer = setTimeout(() => {
+    let updatedOptions = buildStylingOptions();
+    previewQrCode.update(updatedOptions);
+  }, 50); // Debounce 50ms (ลื่นขึ้นแต่ไม่หน่วงเกินไป)
 }
 
 /**

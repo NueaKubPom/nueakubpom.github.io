@@ -10,8 +10,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
   
-  <!-- AOS CSS -->
-  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <!-- SweetAlert2 CSS -->
   <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
   
@@ -74,37 +72,35 @@
 </head>
 
 <body class="font-kanit bg-cyber-gradient text-slate-100 min-h-screen relative overflow-x-hidden selection:bg-neon-cyan selection:text-black">
-  <!-- Background Elements -->
-  <div class="fixed inset-0 z-[-4] bg-cyber-grid bg-[length:42px_42px] opacity-40 [mask-image:radial-gradient(circle_at_center,black_30%,transparent_80%)]"></div>
-  <div class="fixed top-[5%] -left-[5%] w-[min(28rem,50vw)] h-[min(28rem,50vw)] rounded-full bg-neon-cyan/10 blur-[80px] animate-drift-1 z-[-3]"></div>
-  <div class="fixed bottom-[3%] -right-[8%] w-[min(30rem,52vw)] h-[min(30rem,52vw)] rounded-full bg-neon-purple/10 blur-[80px] animate-drift-2 z-[-3]"></div>
+  <!-- Background Elements (Optimized: Removed expensive blur filters, replaced with radial gradients, added will-change) -->
+  <div class="fixed inset-0 z-[-4] bg-cyber-grid bg-[length:42px_42px] opacity-40 [mask-image:radial-gradient(circle_at_center,black_30%,transparent_80%)] will-change-transform translate-z-0"></div>
+  <div class="fixed top-[5%] -left-[5%] w-[min(28rem,50vw)] h-[min(28rem,50vw)] rounded-full bg-[radial-gradient(circle,rgba(0,243,255,0.15)_0%,transparent_70%)] animate-drift-1 z-[-3] will-change-transform"></div>
+  <div class="fixed bottom-[3%] -right-[8%] w-[min(30rem,52vw)] h-[min(30rem,52vw)] rounded-full bg-[radial-gradient(circle,rgba(188,19,254,0.15)_0%,transparent_70%)] animate-drift-2 z-[-3] will-change-transform"></div>
 
   <main class="mx-auto flex min-h-screen w-full max-w-7xl items-center justify-center px-4 py-8 sm:px-6 lg:px-8 relative z-10">
-    <section data-aos="fade-up" data-aos-duration="1000" class="glass-panel w-full overflow-hidden rounded-[32px] grid lg:grid-cols-[1.1fr_0.9fr] relative">
-      <!-- Glow Borders inner -->
-      <div class="absolute inset-0 border border-white/5 rounded-[32px] pointer-events-none"></div>
+    <section class="glass-panel w-full overflow-hidden rounded-[32px] grid lg:grid-cols-[1.1fr_0.9fr] relative">
 
       <!-- Left Column -->
       <div class="relative flex flex-col justify-between gap-8 px-6 py-10 sm:px-10 lg:px-12 lg:py-14 border-b lg:border-b-0 lg:border-r border-white/10">
-        <!-- Ambient spots inside panel -->
-        <div class="absolute -left-10 top-10 h-40 w-40 rounded-full bg-neon-cyan/20 blur-3xl"></div>
-        <div class="absolute bottom-0 left-20 h-32 w-32 rounded-full bg-neon-purple/20 blur-3xl"></div>
+        <!-- Ambient spots inside panel (Optimized) -->
+        <div class="absolute -left-10 top-10 h-40 w-40 rounded-full bg-[radial-gradient(circle,rgba(0,243,255,0.25)_0%,transparent_70%)] pointer-events-none"></div>
+        <div class="absolute bottom-0 left-20 h-32 w-32 rounded-full bg-[radial-gradient(circle,rgba(188,19,254,0.25)_0%,transparent_70%)] pointer-events-none"></div>
 
         <div class="relative z-10 flex flex-wrap items-center justify-between gap-4">
-          <div data-aos="fade-right" data-aos-delay="200" class="inline-flex items-center gap-3 rounded-full border border-neon-cyan/30 bg-neon-cyan/5 px-4 py-2 text-sm text-neon-cyan shadow-neon-cyan backdrop-blur-md">
+          <div class="inline-flex items-center gap-3 rounded-full border border-neon-cyan/30 bg-neon-cyan/5 px-4 py-2 text-sm text-neon-cyan shadow-neon-cyan">
             <span class="inline-flex h-2.5 w-2.5 rounded-full bg-neon-cyan animate-pulse"></span>
             Creative Link Portal
           </div>
-          <div data-aos="fade-left" data-aos-delay="300" class="hidden sm:block rounded-full border border-white/10 bg-black/30 px-4 py-2 text-sm text-slate-400 backdrop-blur-md">
+          <div class="hidden sm:block rounded-full border border-white/10 bg-black/30 px-4 py-2 text-sm text-slate-400">
             NKPNT Studio
           </div>
         </div>
 
         <div class="relative z-10 space-y-8 my-6 lg:my-0">
-          <div data-aos="zoom-in" data-aos-delay="400" class="flex flex-col sm:flex-row items-start sm:items-center gap-6">
-            <div class="relative inline-flex items-center justify-center w-24 h-24 sm:w-28 sm:h-28 rounded-[28px] bg-gradient-to-br from-white/10 to-white/5 border border-white/10 shadow-glass backdrop-blur-xl shrink-0 group">
+          <div class="flex flex-col sm:flex-row items-start sm:items-center gap-6">
+            <div class="relative inline-flex items-center justify-center w-24 h-24 sm:w-28 sm:h-28 rounded-[28px] bg-gradient-to-br from-white/10 to-white/5 border border-white/10 shadow-glass shrink-0 group">
               <div class="absolute inset-2 rounded-[20px] border border-white/5 group-hover:border-neon-cyan/30 transition-colors duration-500"></div>
-              <img src="NKP-NT Studio Logo.png" alt="NKP-NT Studio Logo" class="w-[70%] h-auto object-contain drop-shadow-[0_0_15px_rgba(0,243,255,0.4)] animate-float">
+              <img src="NKP-NT Studio Logo.png" alt="NKP-NT Studio Logo" class="w-[70%] h-auto object-contain drop-shadow-[0_0_15px_rgba(0,243,255,0.4)] animate-float will-change-transform">
             </div>
             <div class="space-y-1">
               <p class="text-xs sm:text-sm uppercase tracking-[0.25em] text-neon-cyan/70 font-semibold">Digital Presence</p>
@@ -114,7 +110,7 @@
             </div>
           </div>
 
-          <div data-aos="fade-up" data-aos-delay="400" class="mt-8 p-5 sm:p-6 rounded-[24px] bg-white/5 border border-white/10 backdrop-blur-md shadow-glass max-w-lg">
+          <div class="mt-8 p-5 sm:p-6 rounded-[24px] bg-black/30 border border-white/10 shadow-glass max-w-lg">
             <h2 class="text-xl font-bold text-white mb-3 text-shadow-glow-cyan">เกี่ยวกับฉัน</h2>
             <ul class="space-y-2 text-slate-300 text-sm sm:text-base mb-4">
               <li><strong class="text-neon-cyan">ชื่อ:</strong> นายแสงทอง อุ่นเจริญ</li>
@@ -140,12 +136,12 @@
         <div class="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent pointer-events-none"></div>
         
         <div class="relative z-10 flex-1 flex flex-col">
-          <div data-aos="fade-down" data-aos-delay="300" class="mb-8 flex flex-wrap items-center justify-between gap-4">
+          <div class="mb-8 flex flex-wrap items-center justify-between gap-4">
             <div>
               <p class="text-xs font-semibold uppercase tracking-[0.2em] text-neon-purple/70">Quick Launch</p>
               <h2 class="text-2xl sm:text-3xl font-bold text-white mt-1 text-shadow-glow-cyan">System Network</h2>
             </div>
-            <div class="inline-flex h-12 w-12 items-center justify-center rounded-xl border border-neon-cyan/20 bg-neon-cyan/10 text-xl text-neon-cyan shadow-neon-cyan backdrop-blur-md">
+            <div class="inline-flex h-12 w-12 items-center justify-center rounded-xl border border-neon-cyan/20 bg-neon-cyan/10 text-xl text-neon-cyan shadow-neon-cyan">
               <i class="fa-solid fa-satellite-dish"></i>
             </div>
           </div>
@@ -162,50 +158,6 @@
     </section>
   </main>
 
-  <!-- Changelog Modal -->
-  <div id="changelog-overlay" class="fixed inset-0 z-[200] hidden items-center justify-center p-4 bg-black/80 backdrop-blur-md" style="opacity:0; transition: opacity 0.4s ease;">
-    <div id="changelog-modal" class="relative w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-[32px] border border-neon-purple/40 bg-gradient-to-b from-slate-900/95 to-black/95 p-6 sm:p-8 shadow-[0_0_40px_rgba(188,19,254,0.15),0_0_80px_rgba(0,243,255,0.08)] backdrop-blur-xl custom-scrollbar" style="transform: scale(0.92) translateY(20px); transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), opacity 0.4s ease;">
-      
-      <!-- Header -->
-      <div class="flex items-start justify-between gap-4 mb-6">
-        <div class="flex items-center gap-4">
-          <div class="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-neon-purple/20 to-neon-cyan/20 border border-neon-purple/30 shadow-neon-purple shrink-0">
-            <i class="fa-solid fa-rocket text-2xl text-neon-purple"></i>
-          </div>
-          <div>
-            <p class="text-xs font-semibold uppercase tracking-[0.2em] text-neon-cyan/70 mb-1">What's New</p>
-            <h2 class="text-2xl sm:text-3xl font-bold text-white" style="text-shadow: 0 0 10px rgba(188,19,254,0.4), 0 0 20px rgba(188,19,254,0.2);">Changelog</h2>
-          </div>
-        </div>
-        <button id="changelog-close-btn" type="button" class="h-10 w-10 flex items-center justify-center rounded-full bg-white/5 border border-white/10 text-slate-400 hover:text-white hover:bg-white/10 hover:border-neon-purple/40 transition-all duration-300 shrink-0 mt-1" aria-label="ปิด">
-          <i class="fa-solid fa-xmark text-lg"></i>
-        </button>
-      </div>
-
-      <!-- Version Badge -->
-      <div class="flex items-center gap-3 mb-6">
-        <span id="changelog-version-badge" class="inline-flex items-center gap-2 rounded-full bg-neon-purple/15 border border-neon-purple/30 px-4 py-1.5 text-sm font-bold text-neon-purple shadow-neon-purple">
-          <i class="fa-solid fa-tag text-xs"></i>
-          <span id="changelog-version-text"></span>
-        </span>
-        <span id="changelog-date" class="text-xs text-slate-500"></span>
-      </div>
-
-      <!-- Changelog Content -->
-      <div id="changelog-content" class="space-y-4">
-        <!-- Injected by JS -->
-      </div>
-
-      <!-- Footer -->
-      <div class="mt-8">
-        <button id="changelog-dismiss-btn" type="button" class="w-full flex items-center justify-center gap-2 py-3.5 px-6 rounded-xl bg-gradient-to-r from-neon-purple/20 to-neon-cyan/20 border border-neon-purple/30 text-neon-purple font-semibold hover:bg-neon-purple/30 hover:shadow-neon-purple transition-all duration-300">
-          <i class="fa-solid fa-check"></i>
-          <span>รับทราบแล้ว</span>
-        </button>
-      </div>
-    </div>
-  </div>
-
   <!-- Custom scrollbar for changelog -->
   <style>
     .custom-scrollbar::-webkit-scrollbar { width: 6px; }
@@ -214,8 +166,8 @@
     .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(0,243,255,0.5); }
   </style>
 
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+  <script src="changelog.js"></script>
   <script src="app.js"></script>
 </body>
 

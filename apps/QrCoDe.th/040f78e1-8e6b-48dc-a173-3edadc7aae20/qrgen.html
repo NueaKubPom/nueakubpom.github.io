@@ -142,26 +142,27 @@
 </head>
 
 <body class="font-kanit bg-cyber-gradient text-slate-100 min-h-screen relative overflow-x-hidden selection:bg-neon-cyan selection:text-black">
-  <!-- Background Elements -->
-  <div class="fixed inset-0 z-[-4] bg-cyber-grid bg-[length:42px_42px] opacity-40 [mask-image:radial-gradient(circle_at_center,black_30%,transparent_80%)]"></div>
-  <div class="fixed top-[5%] -left-[5%] w-[min(28rem,50vw)] h-[min(28rem,50vw)] rounded-full bg-neon-cyan/10 blur-[80px] animate-drift-1 z-[-3]"></div>
-  <div class="fixed bottom-[3%] -right-[8%] w-[min(30rem,52vw)] h-[min(30rem,52vw)] rounded-full bg-neon-purple/10 blur-[80px] animate-drift-2 z-[-3]"></div>
+  <!-- Background Elements (Optimized: Removed expensive blur filters, replaced with radial gradients, added will-change) -->
+  <div class="fixed inset-0 z-[-4] bg-cyber-grid bg-[length:42px_42px] opacity-40 [mask-image:radial-gradient(circle_at_center,black_30%,transparent_80%)] will-change-transform translate-z-0"></div>
+  <div class="fixed top-[5%] -left-[5%] w-[min(28rem,50vw)] h-[min(28rem,50vw)] rounded-full bg-[radial-gradient(circle,rgba(0,243,255,0.15)_0%,transparent_70%)] animate-drift-1 z-[-3] will-change-transform"></div>
+  <div class="fixed bottom-[3%] -right-[8%] w-[min(30rem,52vw)] h-[min(30rem,52vw)] rounded-full bg-[radial-gradient(circle,rgba(188,19,254,0.15)_0%,transparent_70%)] animate-drift-2 z-[-3] will-change-transform"></div>
 
   <main class="mx-auto flex min-h-screen w-full max-w-[1600px] xl:items-center px-4 py-6 sm:px-6 lg:px-8 relative z-10">
-    <section class="w-full overflow-hidden rounded-[32px] border border-white/10 bg-black/40 shadow-[0_0_15px_rgba(0,243,255,0.1)] backdrop-blur-xl grid xl:grid-cols-[0.95fr_1.05fr] relative">
+    <section class="w-full overflow-hidden rounded-[32px] border border-white/10 bg-black/40 shadow-[0_0_15px_rgba(0,243,255,0.1)] grid xl:grid-cols-[0.95fr_1.05fr] relative">
       
       <!-- Glow Borders inner -->
       <div class="absolute inset-0 border border-white/5 rounded-[32px] pointer-events-none"></div>
 
       <!-- Left Column: Header & Preview -->
       <aside class="border-b border-white/10 px-5 py-6 xl:border-b-0 xl:border-r xl:px-8 xl:py-8 relative">
-        <div class="absolute -left-10 top-10 h-40 w-40 rounded-full bg-neon-cyan/20 blur-3xl pointer-events-none"></div>
-        <div class="absolute bottom-0 right-10 h-32 w-32 rounded-full bg-neon-purple/20 blur-3xl pointer-events-none"></div>
+        <!-- Ambient spots inside panel (Optimized) -->
+        <div class="absolute -left-10 top-10 h-40 w-40 rounded-full bg-[radial-gradient(circle,rgba(0,243,255,0.25)_0%,transparent_70%)] pointer-events-none"></div>
+        <div class="absolute bottom-0 right-10 h-32 w-32 rounded-full bg-[radial-gradient(circle,rgba(188,19,254,0.25)_0%,transparent_70%)] pointer-events-none"></div>
 
         <div class="relative z-10 flex h-full flex-col gap-6">
           <div class="flex items-start justify-between gap-4">
             <div class="space-y-6">
-              <a href="../../../index.html" class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-300 backdrop-blur-md transition-all hover:border-neon-cyan/50 hover:bg-neon-cyan/10 hover:text-neon-cyan hover:shadow-neon-cyan group">
+              <a href="../../../index.html" class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-300 transition-all hover:border-neon-cyan/50 hover:bg-neon-cyan/10 hover:text-neon-cyan hover:shadow-neon-cyan group">
                 <i class="fa-solid fa-arrow-left group-hover:-translate-x-1 transition-transform"></i>
                 <span>กลับหน้าหลัก</span>
               </a>
@@ -170,27 +171,27 @@
                 <p class="text-xs sm:text-sm uppercase tracking-[0.25em] text-neon-purple/70 font-semibold">QR Design Studio</p>
                 <h1 class="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-200 to-neon-cyan drop-shadow-[0_0_20px_rgba(0,243,255,0.2)] sm:text-5xl">QR Generator</h1>
                 
-                <div class="inline-flex min-h-12 items-center gap-3 rounded-2xl border border-neon-cyan/20 bg-neon-cyan/5 px-4 py-3 text-slate-200 backdrop-blur-md">
+                <div class="inline-flex min-h-12 items-center gap-3 rounded-2xl border border-neon-cyan/20 bg-neon-cyan/5 px-4 py-3 text-slate-200">
                   <i class="fa-solid fa-sparkles text-neon-cyan animate-pulse"></i>
                   <span id="typing-text" class="min-h-[1.7em] min-w-[18ch] border-r-2 border-neon-cyan pr-2 text-base font-medium animate-[pulseGlow_1s_infinite]"></span>
                 </div>
               </div>
             </div>
 
-            <div class="relative inline-flex items-center justify-center w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-gradient-to-br from-white/10 to-white/5 border border-white/10 shadow-glass backdrop-blur-xl shrink-0 group">
+            <div class="relative inline-flex items-center justify-center w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-gradient-to-br from-white/10 to-white/5 border border-white/10 shadow-glass shrink-0 group">
               <div class="absolute inset-1 rounded-xl border border-white/5 group-hover:border-neon-cyan/30 transition-colors duration-500"></div>
-              <img src="../../../NKP-NT Studio Logo.png" alt="NKP-NT Studio Logo" class="w-[70%] h-auto object-contain drop-shadow-[0_0_15px_rgba(0,243,255,0.4)] animate-float">
+              <img src="../../../NKP-NT Studio Logo.png" alt="NKP-NT Studio Logo" class="w-[70%] h-auto object-contain drop-shadow-[0_0_15px_rgba(0,243,255,0.4)] animate-float will-change-transform">
             </div>
           </div>
 
           <!-- Preview Section -->
-          <section class="rounded-[28px] border border-white/10 bg-black/30 p-5 backdrop-blur-xl shadow-glass mt-auto">
+          <section class="rounded-[28px] border border-white/10 bg-black/40 p-5 shadow-glass mt-auto">
             <div class="mb-5 flex items-center justify-between gap-4">
               <div>
                 <p class="text-xs font-semibold uppercase tracking-[0.2em] text-neon-cyan/70">Preview</p>
                 <h2 class="mt-1 text-2xl font-bold text-white [text-shadow:0_0_10px_rgba(0,243,255,0.3)]">ผลลัพธ์แบบสด</h2>
               </div>
-              <div class="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-neon-cyan/20 bg-neon-cyan/10 text-neon-cyan shadow-neon-cyan backdrop-blur-md">
+              <div class="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-neon-cyan/20 bg-neon-cyan/10 text-neon-cyan shadow-neon-cyan">
                 <i class="fa-solid fa-wand-magic-sparkles"></i>
               </div>
             </div>
@@ -220,13 +221,13 @@
         <div class="relative z-10 flex xl:max-h-[calc(100vh-4rem)] flex-col gap-6 xl:overflow-y-auto pr-2 custom-scrollbar">
           
           <!-- Content Section -->
-          <section class="rounded-[28px] border border-white/10 bg-black/30 p-5 backdrop-blur-xl shadow-glass">
+          <section class="rounded-[28px] border border-white/10 bg-black/40 p-5 shadow-glass">
             <div class="mb-5 flex items-center justify-between gap-4">
               <div>
                 <p class="text-xs font-semibold uppercase tracking-[0.2em] text-neon-purple/70">Content</p>
                 <h2 class="mt-1 text-2xl font-bold text-white">ข้อมูลสำหรับ QR</h2>
               </div>
-              <div class="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-neon-cyan/20 bg-neon-cyan/10 text-neon-cyan shadow-neon-cyan backdrop-blur-md">
+              <div class="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-neon-cyan/20 bg-neon-cyan/10 text-neon-cyan shadow-neon-cyan">
                 <i class="fa-solid fa-link"></i>
               </div>
             </div>
@@ -383,13 +384,13 @@
           </section>
 
           <!-- Themes Section -->
-          <section class="rounded-[28px] border border-white/10 bg-black/30 p-5 backdrop-blur-xl shadow-glass">
+          <section class="rounded-[28px] border border-white/10 bg-black/40 p-5 shadow-glass">
             <div class="mb-5 flex items-center justify-between gap-4">
               <div>
                 <p class="text-xs font-semibold uppercase tracking-[0.2em] text-neon-cyan/70">Themes</p>
                 <h2 class="mt-1 text-2xl font-bold text-white">ธีมสำเร็จรูป</h2>
               </div>
-              <div class="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-neon-cyan/20 bg-neon-cyan/10 text-neon-cyan shadow-neon-cyan backdrop-blur-md">
+              <div class="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-neon-cyan/20 bg-neon-cyan/10 text-neon-cyan shadow-neon-cyan">
                 <i class="fa-solid fa-swatchbook"></i>
               </div>
             </div>
@@ -435,7 +436,7 @@
           </section>
 
           <!-- Shapes Section -->
-          <section class="rounded-[28px] border border-white/10 bg-black/30 p-5 backdrop-blur-xl shadow-glass">
+          <section class="rounded-[28px] border border-white/10 bg-black/40 p-5 shadow-glass">
             <div class="mb-5">
               <p class="text-xs font-semibold uppercase tracking-[0.2em] text-neon-purple/70">Shapes</p>
               <h2 class="mt-1 text-2xl font-bold text-white">รูปแบบจุดและกรอบ</h2>
@@ -473,7 +474,7 @@
           </section>
 
           <!-- Colors Section -->
-          <section class="rounded-[28px] border border-white/10 bg-black/30 p-5 backdrop-blur-xl shadow-glass">
+          <section class="rounded-[28px] border border-white/10 bg-black/40 p-5 shadow-glass">
             <div class="mb-5">
               <p class="text-xs font-semibold uppercase tracking-[0.2em] text-neon-cyan/70">Colors</p>
               <h2 class="mt-1 text-2xl font-bold text-white">สีของจุดและพื้นหลัง</h2>
@@ -551,7 +552,7 @@
           </section>
 
           <!-- Advanced Section -->
-          <section class="rounded-[28px] border border-white/10 bg-black/30 p-5 backdrop-blur-xl shadow-glass">
+          <section class="rounded-[28px] border border-white/10 bg-black/40 p-5 shadow-glass">
             <div class="mb-5">
               <p class="text-xs font-semibold uppercase tracking-[0.2em] text-neon-purple/70">Advanced</p>
               <h2 class="mt-1 text-2xl font-bold text-white">โลโก้และการตั้งค่าขั้นสูง</h2>
@@ -572,7 +573,7 @@
                 </select>
               </div>
 
-              <div class="space-y-4 rounded-[20px] border border-neon-cyan/20 bg-neon-cyan/5 p-4 backdrop-blur-md">
+              <div class="space-y-4 rounded-[20px] border border-neon-cyan/20 bg-neon-cyan/5 p-4">
                 <div id="autoTypeInfo" class="flex items-center gap-3">
                   <span class="rounded-lg bg-neon-cyan/20 px-3 py-1 text-xs font-bold uppercase tracking-[0.1em] text-neon-cyan border border-neon-cyan/30">AUTO MODE</span>
                   <span class="text-sm text-slate-300">ความละเอียด QR จะถูกปรับอัตโนมัติตามข้อมูล</span>
