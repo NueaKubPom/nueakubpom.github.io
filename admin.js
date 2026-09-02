@@ -288,7 +288,22 @@ document.addEventListener("DOMContentLoaded", () => {
   // ==========================================
   // Google Sheets API Functions
   // ==========================================
-  function loadLinks() {
+  function loadLinks(forceFromDefault = false) {
+    if (forceFromDefault) {
+      fetch("links.json")
+        .then(res => res.json())
+        .then(data => {
+          currentLinks = data;
+          renderLinks();
+          updatePreview();
+          Toast.fire({ icon: 'success', title: 'โหลดข้อมูลจากไฟล์เริ่มต้นแล้ว', text: `พบ ${data.length} ลิงก์` });
+        })
+        .catch(err => {
+          Toast.fire({ icon: 'error', title: 'ไม่สามารถอ่านไฟล์ links.json ได้' });
+        });
+      return;
+    }
+
     const fetchUrl = GOOGLE_SCRIPT_URL === "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE"
       ? "links.json"
       : GOOGLE_SCRIPT_URL;
@@ -301,15 +316,48 @@ document.addEventListener("DOMContentLoaded", () => {
         return response.json();
       })
       .then((data) => {
+        // หาก Google Sheet คืนค่า Array ว่างมา ให้ fallback ดึง links.json เพื่อไม่ให้ข้อมูลหาย
+        if (!Array.isArray(data) || data.length === 0) {
+          console.warn("Google Sheet empty, falling back to links.json");
+          fetch("links.json")
+            .then(res => res.json())
+            .then(defaultLinks => {
+              currentLinks = defaultLinks;
+              renderLinks();
+              updatePreview();
+              Toast.fire({
+                icon: 'info',
+                title: 'กู้คืนข้อมูลเริ่มต้นอัตโนมัติ',
+                text: 'เนื่องจาก Google Sheet ว่างเปล่า ระบบจึงโหลดลิงก์เริ่มต้นให้ (กด "บันทึก" เพื่อ Sync เข้า Sheet)'
+              });
+            })
+            .catch(() => {
+              currentLinks = [];
+              renderLinks();
+            });
+          return;
+        }
+
         currentLinks = data;
         renderLinks();
         updatePreview();
         Toast.fire({ icon: 'success', title: 'โหลดข้อมูลสำเร็จ', text: `พบ ${data.length} ลิงก์` });
       })
       .catch((error) => {
-        console.error(error);
-        linksList.innerHTML = `<div class="rounded-2xl border border-rose-500/30 bg-rose-500/10 p-5 text-rose-200 backdrop-blur-md">${error.message}</div>`;
-        Toast.fire({ icon: 'error', title: 'โหลดข้อมูลล้มเหลว', text: error.message, color: '#ff0055', customClass: { timerProgressBar: 'bg-[#ff0055]' } });
+        console.error("Fetch error, falling back to links.json:", error);
+        // Fallback to local links.json on error
+        fetch("links.json")
+          .then(res => res.json())
+          .then(defaultLinks => {
+            currentLinks = defaultLinks;
+            renderLinks();
+            updatePreview();
+            Toast.fire({ icon: 'warning', title: 'ใช้ข้อมูลสำรองจากไฟล์', text: 'ไม่สามารถต่อ Google Sheet ได้' });
+          })
+          .catch(() => {
+            linksList.innerHTML = `<div class="rounded-2xl border border-rose-500/30 bg-rose-500/10 p-5 text-rose-200 backdrop-blur-md">${error.message}</div>`;
+            Toast.fire({ icon: 'error', title: 'โหลดข้อมูลล้มเหลว', text: error.message, color: '#ff0055' });
+          });
       });
   }
 
@@ -472,4 +520,34 @@ document.addEventListener("DOMContentLoaded", () => {
     renderLinks();
     Toast.fire({ icon: 'success', title: 'แก้ไขแล้ว!', text: 'อย่าลืมกดบันทึกไปยัง Google Sheets' });
   });
+
+  // Restore Default from links.json button
+  const restoreDefaultBtn = document.getElementById("restore-default-btn");
+  if (restoreDefaultBtn) {
+    restoreDefaultBtn.addEventListener("click", () => {
+      Swal.fire({
+        title: 'โหลดลิงก์เริ่มต้นจากไฟล์?',
+        text: 'ระบบจะนำรายการลิงก์มาตรฐานจาก links.json มาแทนที่ (กด "บันทึก" หลังโหลดเสร็จ เพื่ออัปเดตเข้า Google Sheets)',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'โหลดเดี๋ยวนี้',
+        cancelButtonText: 'ยกเลิก',
+        background: 'rgba(10, 15, 25, 0.95)',
+        color: '#fff',
+        confirmButtonColor: 'rgba(0, 243, 255, 0.3)',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          loadLinks(true);
+        }
+      });
+    });
+  }
+
+  // Refresh Links button
+  const refreshLinksBtn = document.getElementById("refresh-links-btn");
+  if (refreshLinksBtn) {
+    refreshLinksBtn.addEventListener("click", () => {
+      loadLinks();
+    });
+  }
 });

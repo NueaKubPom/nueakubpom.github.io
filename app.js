@@ -66,6 +66,12 @@ document.addEventListener("DOMContentLoaded", () => {
       return response.json();
     })
     .then((links) => {
+      if (!Array.isArray(links) || links.length === 0) {
+        return fetch("links.json").then(r => r.json());
+      }
+      return links;
+    })
+    .then((links) => {
       links.forEach((link, idx) => {
         const a = document.createElement("a");
         a.href = link.url;
